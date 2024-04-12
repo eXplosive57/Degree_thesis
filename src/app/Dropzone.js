@@ -5,7 +5,6 @@ import { TailwindcssButtons } from './button-test';
 const Dropzone = () => {
     const [files, setFiles] = useState([]);
     const [selectedModel, setSelectedModel] = useState('');
-    const [loading, setLoading] = useState(false); // Stato del caricamento
 
     const onDrop = useCallback(acceptedFiles => {
         setFiles(acceptedFiles);
@@ -13,7 +12,6 @@ const Dropzone = () => {
 
     const analyzePhoto = async () => {
         if (selectedModel && files.length > 0) {
-            setLoading(true); // Imposta lo stato del caricamento su true
 
             const formData = new FormData();
             formData.append('photo', files[0]);
@@ -25,15 +23,10 @@ const Dropzone = () => {
                     body: formData,
                 });
 
-                // gestione update in real time
-                const updatedPhotoListResponse = await fetch('http://127.0.0.1:5000/photo_list');
-                const updatedPhotoList = await updatedPhotoListResponse.json();
-                onPhotoListChange(updatedPhotoList);
-
             } catch (error) {
-                // Gestisci gli errori qui se necessario
+                
             } finally {
-                setLoading(false); // Ripristina lo stato del caricamento
+                
             }
         }
     };
@@ -61,7 +54,7 @@ const Dropzone = () => {
                 </ul>
             </div>
 
-            {/* Passa la funzione analyzePhoto e lo stato di loading al componente TailwindcssButtons */}
+            
             <TailwindcssButtons analyzePhoto={analyzePhoto}></TailwindcssButtons>
         </div>
     );
