@@ -178,10 +178,10 @@
 /******/ 	
 /******/ 	/* webpack/runtime/get mini-css chunk filename */
 /******/ 	!function() {
-/******/ 		// This function allow to reference all chunks
+/******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.miniCssF = function(chunkId) {
 /******/ 			// return url for filenames based on template
-/******/ 			return "static/css/" + chunkId + ".css";
+/******/ 			return undefined;
 /******/ 		};
 /******/ 	}();
 /******/ 	
@@ -192,7 +192,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "28960e65c1c4cf21"; }
+/******/ 		__webpack_require__.h = function() { return "dcbf606c18edb41d"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -237,6 +237,7 @@
 /******/ 					script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 				}
 /******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
+/******/ 		
 /******/ 				script.src = __webpack_require__.tu(url);
 /******/ 			}
 /******/ 			inProgress[url] = [done];
@@ -326,7 +327,6 @@
 /******/ 		var currentUpdateApplyHandlers;
 /******/ 		var queuedInvalidatedModules;
 /******/ 		
-/******/ 		// eslint-disable-next-line no-unused-vars
 /******/ 		__webpack_require__.hmrD = currentModuleData;
 /******/ 		
 /******/ 		__webpack_require__.i.push(function (options) {
@@ -387,8 +387,8 @@
 /******/ 					Object.defineProperty(fn, name, createPropertyDescriptor(name));
 /******/ 				}
 /******/ 			}
-/******/ 			fn.e = function (chunkId) {
-/******/ 				return trackBlockingPromise(require.e(chunkId));
+/******/ 			fn.e = function (chunkId, fetchPriority) {
+/******/ 				return trackBlockingPromise(require.e(chunkId, fetchPriority));
 /******/ 			};
 /******/ 			return fn;
 /******/ 		}
@@ -580,8 +580,7 @@
 /******/ 									updatedModules
 /******/ 								);
 /******/ 								return promises;
-/******/ 							},
-/******/ 							[])
+/******/ 							}, [])
 /******/ 						).then(function () {
 /******/ 							return waitForBlockingPromises(function () {
 /******/ 								if (applyOnUpdate) {
@@ -830,7 +829,11 @@
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = __webpack_require__.hmrS_jsonp = __webpack_require__.hmrS_jsonp || {
-/******/ 			"webpack": 0
+/******/ 			"webpack": 0,
+/******/ 			"css-src_app_css-tabella_css_style_css": 0,
+/******/ 			"css-src_app_css-tabella_css_bootstrap_min_css": 0,
+/******/ 			"css-src_app_css-tabella_fonts_icomoon_style_css-src_app_style_css": 0,
+/******/ 			"css-src_app_globals_css-node_modules_next_font_google_target_css": 0
 /******/ 		};
 /******/ 		
 /******/ 		__webpack_require__.f.j = function(chunkId, promises) {
@@ -842,7 +845,7 @@
 /******/ 					if(installedChunkData) {
 /******/ 						promises.push(installedChunkData[2]);
 /******/ 					} else {
-/******/ 						if("webpack" != chunkId) {
+/******/ 						if(!/^(css\-src_app_(css\-tabella_(css_(bootstrap_min|style)_css|fonts_icomoon_style_css\-src_app_style_css)|globals_css\-node_modules_next_font_google_target_css)|webpack)$/.test(chunkId)) {
 /******/ 							// setup Promise in chunk cache
 /******/ 							var promise = new Promise(function(resolve, reject) { installedChunkData = installedChunks[chunkId] = [resolve, reject]; });
 /******/ 							promises.push(installedChunkData[2] = promise);

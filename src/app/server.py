@@ -67,8 +67,8 @@ def analyze_photo():
     photo = request.files['photo']
 
     # Save the image temporarily
-    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.jpg')
-    photo.save(temp_file.name)
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
+        photo.save(temp_file.name)
 
     # Read the image from the temporary file
     image = cv2.imread(temp_file.name)
