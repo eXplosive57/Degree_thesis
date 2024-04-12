@@ -11,7 +11,7 @@ export function TabsDemo() {
             title: "FOTO",
             value: "FOTO",
             content: (
-                <div className="w-full overflow-y-scroll relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-orange-700 to-red-900">
+                <div className="w-full relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-blue-500 to-purple-800">
                     <p>FOTO</p>
                     <h1>DRAG AND DROP FOTO</h1>
                     <Dropzone />
