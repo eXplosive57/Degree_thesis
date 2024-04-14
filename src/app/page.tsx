@@ -12,6 +12,8 @@ import socketIOClient from 'socket.io-client';
 
 export default function Home() {
   const [photoList, setPhotoList] = useState([]);
+
+  
   // Estraggo le foto analizzate salvate nella directory lato server
   const fetchPhotoList = async () => {
     try {

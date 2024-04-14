@@ -14,8 +14,10 @@ from flask_socketio import SocketIO, emit
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)  # Abilita CORS per tutte le rotte
+
 socketio = SocketIO(app, cors_allowed_origins="*")
+
 
 analyzed_photos_dir = 'analyzed_photos'
 
@@ -108,6 +110,8 @@ def analyze_photo():
     analyzed_photo_path = os.path.join(
         analyzed_photos_dir, f'analyzed_photo_{unique_id}.jpg')
     cv2.imwrite(analyzed_photo_path, annotated_image)
+
+    handle_new_photo_analyzed()
 
     # Return the analyzed image as a response to the client
     return send_file(analyzed_photo_path, mimetype='image/jpeg')

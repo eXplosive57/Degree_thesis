@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { TailwindcssButtons } from './button-test';
 
@@ -12,7 +12,6 @@ const Dropzone = () => {
 
     const analyzePhoto = async () => {
         if (selectedModel && files.length > 0) {
-
             const formData = new FormData();
             formData.append('photo', files[0]);
             formData.append('model', selectedModel);
@@ -59,7 +58,6 @@ const Dropzone = () => {
         </div>
     );
 };
-
 
 const dropzoneStyle = {
     border: '2px dashed #ccc',
