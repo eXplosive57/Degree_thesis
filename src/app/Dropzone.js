@@ -24,9 +24,9 @@ const Dropzone = () => {
                 });
 
             } catch (error) {
-                
+
             } finally {
-                
+
             }
         }
     };
@@ -54,7 +54,7 @@ const Dropzone = () => {
                 </ul>
             </div>
 
-            
+
             <TailwindcssButtons analyzePhoto={analyzePhoto}></TailwindcssButtons>
         </div>
     );

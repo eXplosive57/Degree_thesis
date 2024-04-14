@@ -7,25 +7,37 @@ import './css-tabella/css/bootstrap.min.css';
 import './css-tabella/fonts/icomoon/style.css';
 import './style.css'
 import { TabsDemo } from './tabs-test';
-import { TailwindcssButtons } from './button-test';
+import socketIOClient from 'socket.io-client';
+
 
 export default function Home() {
   const [photoList, setPhotoList] = useState([]);
-
   // Estraggo le foto analizzate salvate nella directory lato server
-  useEffect(() => {
-    const fetchPhotoList = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/photo_list');
-        const data = await response.json();
-        setPhotoList(data);
-      } catch (error) {
-        console.error('Errore durante il recupero dell\'elenco delle foto:', error);
-      }
-    };
+  const fetchPhotoList = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/photo_list');
+      const data = await response.json();
+      setPhotoList(data);
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'elenco delle foto:', error);
+    }
+  };
 
+  useEffect(() => {
+    const socket = socketIOClient('http://127.0.0.1:5000')
+
+    socket.on('photo_analyzed_notification', () => {
+      // Quando ricevi una notifica di nuova foto analizzata, aggiorna la lista delle foto
+      fetchPhotoList();
+    });
+  }, []);
+
+  useEffect(() => {
+    // Questo effetto verrà eseguito solo una volta dopo il montaggio del componente
     fetchPhotoList();
-  }, [])
+  }, []);// Le parentesi quadre vuote indicano che questo effetto non dipende da nessuna variabile e quindi verrà eseguito solo una volta dopo il montaggio del componente.
+
+
 
   return (
     <main>
@@ -43,12 +55,11 @@ export default function Home() {
               </thead>
               <tbody>
                 {photoList.map((imageUrl, index) => (
-                  <tr key={index} scope="row">
+                  <tr key={index}>
                     <td><img src={imageUrl} alt={`Photo ${index}`} style={{ maxWidth: '500px' }} /></td>
                     <td>prova</td>
                     <td><small className="d-block">Far far away, behind the word mountains</small></td>
                     <td><a href={imageUrl} download>Download</a></td>
-                    <td><button onClick={() => handleDelete(index)}>Delete</button></td>
                   </tr>
                 ))}
               </tbody>

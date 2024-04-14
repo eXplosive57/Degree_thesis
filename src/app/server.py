@@ -10,11 +10,20 @@ from collections import Counter
 from flask_cors import CORS
 import uuid
 import base64
+from flask_socketio import SocketIO, emit
+
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 analyzed_photos_dir = 'analyzed_photos'
+
+
+@socketio.on('new_photo_analyzed')
+def handle_new_photo_analyzed():
+    # Invia un segnale ai client quando viene analizzata una nuova foto
+    socketio.emit('photo_analyzed_notification', namespace='/')
 
 
 @app.route('/photo_list')
@@ -105,4 +114,4 @@ def analyze_photo():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)
