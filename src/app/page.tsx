@@ -13,7 +13,7 @@ import socketIOClient from 'socket.io-client';
 export default function Home() {
   const [photoList, setPhotoList] = useState([]);
 
-  
+
   // Estraggo le foto analizzate salvate nella directory lato server
   const fetchPhotoList = async () => {
     try {
@@ -29,13 +29,12 @@ export default function Home() {
     const socket = socketIOClient('http://127.0.0.1:5000')
 
     socket.on('photo_analyzed_notification', () => {
-      // Quando ricevi una notifica di nuova foto analizzata, aggiorna la lista delle foto
+      // quando ricevo una notifica dal client, aggiorno lista foto
       fetchPhotoList();
     });
   }, []);
 
   useEffect(() => {
-    // Questo effetto verrà eseguito solo una volta dopo il montaggio del componente
     fetchPhotoList();
   }, []);// Le parentesi quadre vuote indicano che questo effetto non dipende da nessuna variabile e quindi verrà eseguito solo una volta dopo il montaggio del componente.
 
