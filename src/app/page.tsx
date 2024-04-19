@@ -2,10 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ThreeDCardDemo } from "./3d-test";
 import { SparklesPreview } from "./spark-test";
-import './css-tabella/css/style.css';
-import './css-tabella/css/bootstrap.min.css';
-import './css-tabella/fonts/icomoon/style.css';
-import './style.css'
+import './globals.css'
 import { TabsDemo } from './tabs-test';
 import socketIOClient from 'socket.io-client';
 
@@ -15,21 +12,24 @@ export default function Home() {
 
 
   // Estraggo le foto analizzate salvate nella directory lato server
-  const fetchPhotoList = async () => {
+  async function fetchPhotoList() {
     try {
       const response = await fetch('http://127.0.0.1:5000/photo_list');
       const data = await response.json();
       setPhotoList(data);
     } catch (error) {
       console.error('Errore durante il recupero dell\'elenco delle foto:', error);
+      return [];
     }
-  };
+  }
 
   useEffect(() => {
     const socket = socketIOClient('http://127.0.0.1:5000')
 
     socket.on('photo_analyzed_notification', () => {
       // quando ricevo una notifica dal client, aggiorno lista foto
+
+      // -------------- PROVA A METTERE QUI IL LOADING ANIMAZIONE --------------
       fetchPhotoList();
     });
   }, []);

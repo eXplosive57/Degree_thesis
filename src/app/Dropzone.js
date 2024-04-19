@@ -1,10 +1,14 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { TailwindcssButtons } from './button-test';
+import PropagateLoader from "react-spinners/PropagateLoader";
+import { fetchPhotoList } from './page';
+
 
 const Dropzone = () => {
     const [files, setFiles] = useState([]);
     const [selectedModel, setSelectedModel] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const onDrop = useCallback(acceptedFiles => {
         setFiles(acceptedFiles);
@@ -12,6 +16,8 @@ const Dropzone = () => {
 
     const analyzePhoto = async () => {
         if (selectedModel && files.length > 0) {
+            setLoading(true);
+
             const formData = new FormData();
             formData.append('photo', files[0]);
             formData.append('model', selectedModel);
@@ -22,10 +28,13 @@ const Dropzone = () => {
                     body: formData,
                 });
 
+
+
+
+                setLoading(false);  // Imposta lo stato di caricamento su false dopo che l'analisi è completa
             } catch (error) {
-
-            } finally {
-
+                console.error('Errore durante l\'analisi della foto:', error);
+                setLoading(false); // Assicurati che lo stato di caricamento sia impostato su false in caso di errore
             }
         }
     };
@@ -53,6 +62,16 @@ const Dropzone = () => {
                 </ul>
             </div>
 
+            {loading ? <div style={loaderContainerStyle}>
+                <PropagateLoader
+                    size={20}
+                    color={"black"}
+                    loading={loading}
+                    speedMultiplier={1.5}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+            </div> : null} {/* Mostra l'animazione di caricamento se loading è true */}
 
             <TailwindcssButtons analyzePhoto={analyzePhoto}></TailwindcssButtons>
         </div>
@@ -81,6 +100,14 @@ const fileItemStyle = {
     padding: '5px 10px',
     borderRadius: '4px',
     margin: '6px 0',
+};
+
+const loaderContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '30px',
+    marginBottom: '50px'
 };
 
 export default Dropzone;

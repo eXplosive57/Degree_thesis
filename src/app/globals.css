@@ -38,3 +38,11 @@ body {
 .no-visible-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.h-auto {
+  height: auto;
+}
+
+.h-full {
+  height: 100%;
+}

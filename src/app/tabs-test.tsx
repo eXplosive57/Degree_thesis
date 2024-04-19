@@ -11,7 +11,7 @@ export function TabsDemo() {
             title: "FOTO",
             value: "FOTO",
             content: (
-                <div className="w-full relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-blue-500 to-purple-800">
+                <div className="w-full relative h-auto rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-green-700 to-violet-900">
                     <p>FOTO</p>
                     <h1>DRAG AND DROP FOTO</h1>
                     <Dropzone />
@@ -22,7 +22,7 @@ export function TabsDemo() {
             title: "VIDEO",
             value: "VIDEO",
             content: (
-                <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-green-700 to-violet-900">
+                <div className="w-full overflow-hidden relative h-auto rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-blue-500 to-purple-800">
                     <p>VIDEO</p>
                     <h1>DRAG AND DROP VIDEO</h1>
                     <Dropzone />
@@ -34,7 +34,7 @@ export function TabsDemo() {
             title: "Random",
             value: "random",
             content: (
-                <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-blue-700 to-violet-900">
+                <div className="w-full overflow-hidden relative h-auto rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-blue-700 to-violet-900">
                     <p>Random tab</p>
                     <p>?</p>
                 </div>
