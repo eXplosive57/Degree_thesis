@@ -11,6 +11,11 @@
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
+    "@nextui-org/button": "^2.0.30",
+    "@nextui-org/card": "^2.0.27",
+    "@nextui-org/image": "^2.0.27",
+    "@nextui-org/react": "^2.3.5",
+    "@radix-ui/themes": "^3.0.2",
     "@tabler/icons-react": "^3.1.0",
     "@tensorflow-models/mobilenet": "^2.1.1",
     "@tensorflow/tfjs": "^4.17.0",

@@ -5,6 +5,9 @@ import { SparklesPreview } from "./spark-test";
 import './globals.css'
 import { TabsDemo } from './tabs-test';
 import socketIOClient from 'socket.io-client';
+import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image } from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/react";
+
 
 
 export default function Home() {
@@ -41,9 +44,32 @@ export default function Home() {
 
 
   return (
+
     <main>
       <SparklesPreview />
       <TabsDemo />
+
+      <NextUIProvider>
+
+        <Card className="py-4">
+          <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+            <p className="text-tiny uppercase font-bold">Daily Mix</p>
+            <small className="text-default-500">12 Tracks</small>
+            <h4 className="font-bold text-large">Frontend Radio</h4>
+          </CardHeader>
+          <CardBody className="overflow-visible py-2">
+            <Image
+              alt="Card background"
+              className="object-cover rounded-xl"
+              src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
+              width={270}
+            />
+          </CardBody>
+        </Card>
+
+      </NextUIProvider>
+
+
       <div className="content">
         <div className="container">
           <h2 className="mb-5">Download Results</h2>
@@ -68,6 +94,19 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </main>
+
+
+
+
+
+
+
+
+
+
+
+    </main >
+
+
   );
 }
