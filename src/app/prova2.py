@@ -3,6 +3,7 @@ import sys
 import torch
 from PIL import Image
 from torchvision import transforms
+import matplotlib.pyplot as plt
 
 try:
     # Add the project root directory to the system path
@@ -17,7 +18,7 @@ except:
 checkpoint_path = "ckpt_folder/ViT_timm_EA_50epochs.ckpt"
 
 # Carica l'immagine di esempio
-image_path = "static/2.png"
+image_path = "static/1.png"
 image = Image.open(image_path)
 
 # Definisci le trasformazioni per preparare l'immagine
@@ -50,3 +51,5 @@ predicted_class = logits.argmax(dim=1)
 
 # Stampa i risultati
 print("Classe predetta:", predicted_class.item())
+
+plt.imshow(input_image)

@@ -23,7 +23,7 @@ const Dropzone = () => {
             formData.append('model', selectedModel);
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/analyze_photo', {
+                const response = await fetch('http://127.0.0.1:5000/analyze', {
                     method: 'POST',
                     body: formData,
                 });
@@ -45,7 +45,7 @@ const Dropzone = () => {
         <div>
             <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)}>
                 <option value="">Seleziona un modello</option>
-                <option value="modello1">Modello 1</option>
+                <option value="video">VIDEO DETECTION</option>
             </select>
 
             <div {...getRootProps()} style={dropzoneStyle}>

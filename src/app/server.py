@@ -68,15 +68,26 @@ def predicted_classes(boxes, class_names):
     return pred_class_names
 
 
-@app.route('/analyze_photo', methods=['POST'])
-def analyze_photo():
+@app.route('/analyze', methods=['POST'])
+def analyze():
     # Check if the file was uploaded
-    if 'photo' not in request.files:
+    if 'file' not in request.files:
         return 'No file uploaded', 400
 
-    # Get the image file from the form
-    photo = request.files['photo']
+    # Get the file and selected model from the form
+    uploaded_file = request.files['file']
+    selected_model = request.form.get('selectedModel')
 
+    # Determine which analysis function to call based on the selected model
+    if selected_model == 'photo':
+        return analyze_photo(uploaded_file)
+    elif selected_model == 'video':
+        return analyze_video(uploaded_file)
+    else:
+        return 'Invalid model selection', 400
+
+
+def analyze_photo(photo):
     # Save the image temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
         photo.save(temp_file.name)
@@ -115,6 +126,51 @@ def analyze_photo():
 
     # Return the analyzed image as a response to the client
     return send_file(analyzed_photo_path, mimetype='image/jpeg')
+
+
+def analyze_video(video):
+    # Percorso completo del video di output
+    # output_path = 'video/cars_analyzed.mp4'
+
+    # Apri il video
+    video_capture = cv2.VideoCapture(video)
+
+    # Imposta i codec e il frame rate del video di output
+    codec = cv2.VideoWriter_fourcc(*'avc1')
+    fps = int(video_capture.get(cv2.CAP_PROP_FPS))
+    frame_size = (int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
+                  int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+
+    # Crea il video di output
+    out = cv2.VideoWriter(video, codec, fps, frame_size)
+
+    # Ciclo sui frame del video di input
+    while True:
+        ret, frame = video_capture.read()
+        if not ret:
+            break
+
+        # Analizza il frame con il modello YOLO
+        results_list = model(frame)  # Ogni elemento è un oggetto Results
+
+        # Ciclo su ogni elemento della lista
+        for results in results_list:
+            # Annotate the image with identifying rectangles and class names
+            for box in results.boxes:
+                box_xy = box.xyxy[0]  # Get the bounding box coordinates
+                cls = box.cls  # Class index
+                class_name = model.names[int(cls)]  # Get the class name
+                cv2.rectangle(frame, (int(box_xy[0]), int(box_xy[1])), (int(
+                    box_xy[2]), int(box_xy[3])), (0, 255, 0), 2)
+                cv2.putText(frame, class_name, (int(box_xy[0]), int(
+                    box_xy[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+        # Salva il frame nel video di output
+        out.write(frame)
+
+    # Rilascia le risorse
+    video_capture.release()
+    out.release()
 
 
 if __name__ == '__main__':
