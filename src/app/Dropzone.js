@@ -2,8 +2,6 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { TailwindcssButtons } from './button-test';
 import PropagateLoader from "react-spinners/PropagateLoader";
-import { fetchPhotoList } from './page';
-
 
 const Dropzone = () => {
     const [files, setFiles] = useState([]);
@@ -19,7 +17,7 @@ const Dropzone = () => {
             setLoading(true);
 
             const formData = new FormData();
-            formData.append('photo', files[0]);
+            formData.append('file', files[0]);
             formData.append('model', selectedModel);
 
             try {
@@ -46,6 +44,7 @@ const Dropzone = () => {
             <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)}>
                 <option value="">Seleziona un modello</option>
                 <option value="video">VIDEO DETECTION</option>
+                <option value="photo">FOTO DETECTION</option>
             </select>
 
             <div {...getRootProps()} style={dropzoneStyle}>

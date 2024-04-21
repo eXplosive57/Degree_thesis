@@ -49,7 +49,7 @@ with open("yolo/config/config.yaml") as f:
     cfg = OmegaConf.load(f)
 
 # Load YOLO model
-model = YOLO(Path(cfg.model_path), task="detect")
+model = YOLO('yolov8n.pt')
 
 
 def predicted_classes(boxes, class_names):
@@ -72,11 +72,11 @@ def predicted_classes(boxes, class_names):
 def analyze():
     # Check if the file was uploaded
     if 'file' not in request.files:
-        return 'No file uploaded', 400
+        return 'No file uploadeddddd', 400
 
     # Get the file and selected model from the form
     uploaded_file = request.files['file']
-    selected_model = request.form.get('selectedModel')
+    selected_model = request.form.get('model')
 
     # Determine which analysis function to call based on the selected model
     if selected_model == 'photo':
@@ -129,11 +129,24 @@ def analyze_photo(photo):
 
 
 def analyze_video(video):
-    # Percorso completo del video di output
-    # output_path = 'video/cars_analyzed.mp4'
+    # Salvare temporaneamente il video
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
+        temp_file.write(video.read())
+        temp_file_path = temp_file.name
 
     # Apri il video
-    video_capture = cv2.VideoCapture(video)
+    video_capture = cv2.VideoCapture(temp_file_path)
+
+    # Controlla se l'apertura del video è avvenuta correttamente
+    if not video_capture.isOpened():
+        print("Errore nell'apertura del video")
+        return None
+
+    # Percorso completo del video di output nella cartella analyzed_video
+    analyzed_videos_dir = 'analyzed_video'
+    os.makedirs(analyzed_videos_dir, exist_ok=True)
+    output_filename = f"analyzed_{video.filename}"
+    output_path = os.path.join(analyzed_videos_dir, output_filename)
 
     # Imposta i codec e il frame rate del video di output
     codec = cv2.VideoWriter_fourcc(*'avc1')
@@ -141,8 +154,18 @@ def analyze_video(video):
     frame_size = (int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
                   int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 
+    # Controlla se il frame rate è valido
+    if fps <= 0:
+        print("Frame rate non valido")
+        return None
+
     # Crea il video di output
-    out = cv2.VideoWriter(video, codec, fps, frame_size)
+    out = cv2.VideoWriter(output_path, codec, fps, frame_size)
+
+    # Controlla se il video di output è stato creato correttamente
+    if not out.isOpened():
+        print("Errore nella creazione del video di output")
+        return None
 
     # Ciclo sui frame del video di input
     while True:
