@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { TailwindcssButtons } from './button-test';
 import PropagateLoader from "react-spinners/PropagateLoader";
+import { RadioGroup, Radio } from "@nextui-org/react";
+
 
 const Dropzone = () => {
     const [files, setFiles] = useState([]);
@@ -41,11 +43,32 @@ const Dropzone = () => {
 
     return (
         <div>
-            <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)}>
+
+            <RadioGroup
+                color="success"
+                orientation='horizontal'
+                style={{ marginTop: '10px' }}
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}            >
+                <Radio value="fake">
+                    Fake detection
+                </Radio>
+                <Radio value="object">
+                    Object detection
+                </Radio>
+                <Radio value="speed">
+                    Speed detection
+                </Radio>
+                <Radio value="gym">
+                    Gym detection
+                </Radio>
+            </RadioGroup>
+
+            {/* <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)}>
                 <option value="">Seleziona un modello</option>
                 <option value="video">VIDEO DETECTION</option>
                 <option value="photo">FOTO DETECTION</option>
-            </select>
+            </select> */}
 
             <div {...getRootProps()} style={dropzoneStyle}>
                 <input {...getInputProps()} />
@@ -61,19 +84,21 @@ const Dropzone = () => {
                 </ul>
             </div>
 
-            {loading ? <div style={loaderContainerStyle}>
-                <PropagateLoader
-                    size={20}
-                    color={"black"}
-                    loading={loading}
-                    speedMultiplier={1.5}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                />
-            </div> : null} {/* Mostra l'animazione di caricamento se loading è true */}
+            {
+                loading ? <div style={loaderContainerStyle}>
+                    <PropagateLoader
+                        size={20}
+                        color={"black"}
+                        loading={loading}
+                        speedMultiplier={1.5}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div> : null
+            } {/* Mostra l'animazione di caricamento se loading è true */}
 
             <TailwindcssButtons analyzePhoto={analyzePhoto}></TailwindcssButtons>
-        </div>
+        </div >
     );
 };
 

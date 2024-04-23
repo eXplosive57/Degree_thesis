@@ -12,7 +12,6 @@ import uuid
 import base64
 from flask_socketio import SocketIO, emit
 
-
 app = Flask(__name__)
 CORS(app)  # Abilita CORS per tutte le rotte
 
@@ -44,12 +43,12 @@ def get_photo_list():
     return jsonify(photo_data_list)
 
 
-# Load Hydra configuration file
-with open("yolo/config/config.yaml") as f:
-    cfg = OmegaConf.load(f)
+# # Load Hydra configuration file
+# with open("yolo/config/config.yaml") as f:
+#     cfg = OmegaConf.load(f)
 
 # Load YOLO model
-model = YOLO('yolov8n.pt')
+model = YOLO('model/yolov8n.pt')
 
 
 def predicted_classes(boxes, class_names):
@@ -78,13 +77,17 @@ def analyze():
     uploaded_file = request.files['file']
     selected_model = request.form.get('model')
 
-    # Determine which analysis function to call based on the selected model
-    if selected_model == 'photo':
-        return analyze_photo(uploaded_file)
-    elif selected_model == 'video':
-        return analyze_video(uploaded_file)
+    # Get the file extension
+    file_extension = os.path.splitext(uploaded_file.filename)[1]
+
+    if selected_model == 'object':
+        if file_extension.lower() in ('.jpg', '.jpeg', '.png', '.gif'):
+            return analyze_photo(uploaded_file)
+        else:
+            # aggiungi check formati video
+            return analyze_video(uploaded_file)
     else:
-        return 'Invalid model selection', 400
+        return 'Invalid file extension for video analysis', 400
 
 
 def analyze_photo(photo):
