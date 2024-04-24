@@ -11,6 +11,14 @@ from flask_cors import CORS
 import uuid
 import base64
 from flask_socketio import SocketIO, emit
+import glob
+import time
+# get the file nam from uplaoded file
+from werkzeug.utils import secure_filename
+import argparse
+from PIL import Image
+from resnet50nodown import resnet50nodown
+
 
 app = Flask(__name__)
 CORS(app)  # Abilita CORS per tutte le rotte
@@ -82,12 +90,15 @@ def analyze():
 
     if selected_model == 'object':
         if file_extension.lower() in ('.jpg', '.jpeg', '.png', '.gif'):
+            print('ok')
             return analyze_photo(uploaded_file)
         else:
             # aggiungi check formati video
             return analyze_video(uploaded_file)
+    elif selected_model == 'fake':
+        return analyze_fake(uploaded_file)
     else:
-        return 'Invalid file extension for video analysis', 400
+        return 'Invalid model selected', 400
 
 
 def analyze_photo(photo):
@@ -197,6 +208,74 @@ def analyze_video(video):
     # Rilascia le risorse
     video_capture.release()
     out.release()
+    handle_new_photo_analyzed()
+
+    return 'Video analyzed successfully', 200
+
+
+def analyze_fake(photo):
+    # Save the image temporarily
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
+        photo.save(temp_file.name)
+
+    image = cv2.imread(temp_file.name)
+
+    print('prova')
+    # parser = argparse.ArgumentParser(description="This script tests the network on an image folder and collects the results in a CSV file.",
+    #                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    # parser.add_argument('--weights_path', '-m', type=str,
+    #                     default='./weights/gandetection_resnet50nodown_progan.pth', help='weights path of the network')
+    # parser.add_argument('--input_folder', '-i', type=str,
+    #                     default='./misto', help='input folder with PNG and JPEG images')
+    # parser.add_argument('--output_csv', '-o', type=str,
+    #                     default=None, help='output CSV file')
+
+    weights_path = ('./weights/gandetection_resnet50nodown_progan.pth')
+    output_csv = os.path.join(
+        'output', f'out_{os.path.basename(image)}.csv')
+
+    # config = parser.parse_args()
+    # weights_path = config.weights_path
+    # input_folder = config.input_folder
+    # output_csv = config.output_csv
+
+    from torch.cuda import is_available as is_available_cuda
+    device = 'cuda:0' if is_available_cuda() else 'cpu'
+    net = resnet50nodown(device, weights_path)
+
+    # if output_csv is None:
+    #     output_csv = 'out.'+os.path.basename(photo)+'.csv'
+
+    list_files = sorted(sum([glob.glob(os.path.join(image, '*.'+x))
+                        for x in ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG']], list()))
+    num_files = len(list_files)
+
+    print('GAN IMAGE DETECTION')
+    print('START')
+
+    with open(output_csv, 'w') as fid:
+        fid.write('filename,logit,time, predict\n')
+        fid.flush()
+        for index, filename in enumerate(list_files):
+            print('%5d/%d' % (index, num_files), end='\r')
+            tic = time.time()
+            img = Image.open(filename).convert('RGB')
+            img.load()
+            logit = net.apply(img)
+            toc = time.time()
+
+            if (logit < 0):
+                state = ('real')
+            else:
+                state = ('fake')
+
+            fid.write('%s,%f,%f,%s\n' % (filename, logit, toc-tic, state))
+            fid.flush()
+
+    print('\nDONE')
+    print('OUTPUT: %s' % output_csv)
+    handle_new_photo_analyzed()
+    return 'Daje', 200
 
 
 if __name__ == '__main__':
