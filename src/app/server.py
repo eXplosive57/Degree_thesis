@@ -231,8 +231,8 @@ def analyze_fake(photo):
     #                     default=None, help='output CSV file')
 
     weights_path = ('./weights/gandetection_resnet50nodown_progan.pth')
-    output_csv = os.path.join(
-        'output', f'out_{os.path.basename(image)}.csv')
+    # output_csv = os.path.join(
+    #     'output', f'out_{os.path.basename(temp_file.name)}.csv')
 
     # config = parser.parse_args()
     # weights_path = config.weights_path
@@ -243,37 +243,23 @@ def analyze_fake(photo):
     device = 'cuda:0' if is_available_cuda() else 'cpu'
     net = resnet50nodown(device, weights_path)
 
-    # if output_csv is None:
-    #     output_csv = 'out.'+os.path.basename(photo)+'.csv'
+    # Analyze the received image
+    tic = time.time()
+    img = Image.open(temp_file.name).convert('RGB')
+    img.load()
+    logit = net.apply(img)
+    toc = time.time()
 
-    list_files = sorted(sum([glob.glob(os.path.join(image, '*.'+x))
-                        for x in ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG']], list()))
-    num_files = len(list_files)
+    # Determine if the image is fake or real
+    state = 'real' if logit < 0 else 'fake'
 
-    print('GAN IMAGE DETECTION')
-    print('START')
-
-    with open(output_csv, 'w') as fid:
-        fid.write('filename,logit,time, predict\n')
-        fid.flush()
-        for index, filename in enumerate(list_files):
-            print('%5d/%d' % (index, num_files), end='\r')
-            tic = time.time()
-            img = Image.open(filename).convert('RGB')
-            img.load()
-            logit = net.apply(img)
-            toc = time.time()
-
-            if (logit < 0):
-                state = ('real')
-            else:
-                state = ('fake')
-
-            fid.write('%s,%f,%f,%s\n' % (filename, logit, toc-tic, state))
-            fid.flush()
-
+    # # Write the results to the CSV file
+    # with open(output_csv, 'w') as fid:
+    #     fid.write('filename,logit,time,predict\n')
+    #     fid.write('%s,%f,%f,%s\n' % (temp_file.name, logit, toc-tic, state))
     print('\nDONE')
-    print('OUTPUT: %s' % output_csv)
+    print(state)
+    # print('OUTPUT: %s' % output_csv)
     handle_new_photo_analyzed()
     return 'Daje', 200
 
