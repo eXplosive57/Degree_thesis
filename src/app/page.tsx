@@ -5,8 +5,6 @@ import { SparklesPreview } from "./spark-test";
 import './globals.css'
 import { TabsDemo } from './tabs-test';
 import socketIOClient from 'socket.io-client';
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image } from "@nextui-org/react";
-import { NextUIProvider } from "@nextui-org/react";
 
 
 
@@ -49,51 +47,12 @@ export default function Home() {
       <SparklesPreview />
       <TabsDemo />
 
-      {/* <NextUIProvider>
-
-        <Card className="py-4">
-          <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-            <p className="text-tiny uppercase font-bold">Daily Mix</p>
-            <small className="text-default-500">12 Tracks</small>
-            <h4 className="font-bold text-large">Frontend Radio</h4>
-          </CardHeader>
-          <CardBody className="overflow-visible py-2">
-            <Image
-              alt="Card background"
-              className="object-cover rounded-xl"
-              src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-              width={270}
-            />
-          </CardBody>
-        </Card>
-
-      </NextUIProvider> */}
 
 
-      <div className="content">
-        <div className="container">
-          <h2 className="mb-5">Download Results</h2>
-          <div className="table-responsive">
-            <table className="table table-striped custom-table">
-              <thead>
-                <tr>
-                  <th scope="col">File Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                {photoList.map((imageUrl, index) => (
-                  <tr key={index}>
-                    <td><img src={imageUrl} alt={`Photo ${index}`} style={{ maxWidth: '500px' }} /></td>
-                    <td>prova</td>
-                    <td><small className="d-block">Far far away, behind the word mountains</small></td>
-                    <td><a href={imageUrl} download>Download</a></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    
+    
+    
+    
     </main >
 
 
