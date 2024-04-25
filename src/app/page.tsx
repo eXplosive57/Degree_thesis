@@ -5,8 +5,9 @@ import { SparklesPreview } from "./spark-test";
 import './globals.css'
 import { TabsDemo } from './tabs-test';
 import socketIOClient from 'socket.io-client';
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, RadioGroup, Radio} from "@nextui-org/react";
 
+const colors = ["default", "primary", "secondary", "success", "warning", "danger"];
 
 
 export default function Home() {
@@ -39,8 +40,7 @@ export default function Home() {
   useEffect(() => {
     fetchPhotoList();
   }, []);// Le parentesi quadre vuote indicano che questo effetto non dipende da nessuna variabile e quindi verrà eseguito solo una volta dopo il montaggio del componente.
-
-
+  
 
   return (
 
@@ -53,29 +53,35 @@ export default function Home() {
 
       <div className="content">
         <div className="container">
-        <Table aria-label="Example table with dynamic content">
+        <Table 
+  color={'primary'}
+  selectionMode="multiple" 
+  aria-label="Example static collection table"
+>
   <TableHeader>
-    <TableColumn>File Name</TableColumn>
-    <TableColumn>Image</TableColumn>
-    <TableColumn>Action</TableColumn>
+  <TableColumn>IMAGE</TableColumn> 
+    <TableColumn>NAME</TableColumn>
+    <TableColumn>STATUS</TableColumn>
+    
   </TableHeader>
   <TableBody>
-    {photoList.map((imageUrl, index) => (
-      <TableRow key={index}>
-        <TableCell>{`Photo ${index}`}</TableCell>
-        <TableCell>
-          <img src={imageUrl} alt={`Photo ${index}`} style={{ maxWidth: '100px' }} />
-        </TableCell>
-        <TableCell>
-          <a href={imageUrl} download>Download</a>
-        </TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
+  {photoList.map((photo, index) => ( // Utilizza photo come elemento corrente
+    <TableRow key={index}>
+      <TableCell>
+        <img src={photo.imageUrl} alt={`Photo ${index}`} style={{ maxWidth: '70px' }} />
+      </TableCell>
+      <TableCell>{photo.name}</TableCell>
+      <TableCell>download</TableCell>
+    </TableRow>
+  ))}
+</TableBody>
 </Table>
+
+
+    </div>
         </div>
-      </div>
-    
+      
+
 
     
     

@@ -37,16 +37,16 @@ def handle_new_photo_analyzed():
 
 @app.route('/photo_list')
 def get_photo_list():
-    # Ottieni l'elenco dei nomi delle immagini nella directory analyzed_photos,
-    # escludendo il file .DS_Store se presente
     photo_data_list = []
 
     for filename in os.listdir(analyzed_photos_dir):
         if filename != ".DS_Store":
             with open(os.path.join(analyzed_photos_dir, filename), "rb") as image_file:
-                image_data = base64.b64encode(
-                    image_file.read()).decode("utf-8")
-                photo_data_list.append(f"data:image/jpeg;base64,{image_data}")
+                image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                photo_data_list.append({
+                    "name": filename,  # Aggiungi il nome del file all'oggetto JSON
+                    "imageUrl": f"data:image/jpeg;base64,{image_data}"
+                })
 
     return jsonify(photo_data_list)
 
