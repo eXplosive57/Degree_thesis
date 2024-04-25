@@ -38,7 +38,6 @@ def handle_new_photo_analyzed():
 @app.route('/photo_list')
 def get_photo_list():
     photo_data_list = []
-
     for filename in os.listdir(analyzed_photos_dir):
         if filename != ".DS_Store":
             with open(os.path.join(analyzed_photos_dir, filename), "rb") as image_file:
@@ -84,6 +83,7 @@ def analyze():
     # Get the file and selected model from the form
     uploaded_file = request.files['file']
     selected_model = request.form.get('model')
+    file_name = request.form['nome']
 
     # Get the file extension
     file_extension = os.path.splitext(uploaded_file.filename)[1]
@@ -91,7 +91,7 @@ def analyze():
     if selected_model == 'object':
         if file_extension.lower() in ('.jpg', '.jpeg', '.png', '.gif'):
             print('ok')
-            return analyze_photo(uploaded_file)
+            return analyze_photo(uploaded_file, file_name)
         else:
             # aggiungi check formati video
             return analyze_video(uploaded_file)
@@ -101,7 +101,7 @@ def analyze():
         return 'Invalid model selected', 400
 
 
-def analyze_photo(photo):
+def analyze_photo(photo, nome_file):
     # Save the image temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
         photo.save(temp_file.name)
@@ -133,7 +133,7 @@ def analyze_photo(photo):
     analyzed_photos_dir = 'analyzed_photos'
     os.makedirs(analyzed_photos_dir, exist_ok=True)
     analyzed_photo_path = os.path.join(
-        analyzed_photos_dir, f'analyzed_photo_{unique_id}.jpg')
+        analyzed_photos_dir, f'{nome_file}')
     cv2.imwrite(analyzed_photo_path, annotated_image)
 
     handle_new_photo_analyzed()
@@ -220,24 +220,7 @@ def analyze_fake(photo):
 
     image = cv2.imread(temp_file.name)
 
-    print('prova')
-    # parser = argparse.ArgumentParser(description="This script tests the network on an image folder and collects the results in a CSV file.",
-    #                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    # parser.add_argument('--weights_path', '-m', type=str,
-    #                     default='./weights/gandetection_resnet50nodown_progan.pth', help='weights path of the network')
-    # parser.add_argument('--input_folder', '-i', type=str,
-    #                     default='./misto', help='input folder with PNG and JPEG images')
-    # parser.add_argument('--output_csv', '-o', type=str,
-    #                     default=None, help='output CSV file')
-
     weights_path = ('./weights/gandetection_resnet50nodown_progan.pth')
-    # output_csv = os.path.join(
-    #     'output', f'out_{os.path.basename(temp_file.name)}.csv')
-
-    # config = parser.parse_args()
-    # weights_path = config.weights_path
-    # input_folder = config.input_folder
-    # output_csv = config.output_csv
 
     from torch.cuda import is_available as is_available_cuda
     device = 'cuda:0' if is_available_cuda() else 'cpu'
@@ -252,11 +235,6 @@ def analyze_fake(photo):
 
     # Determine if the image is fake or real
     state = 'real' if logit < 0 else 'fake'
-
-    # # Write the results to the CSV file
-    # with open(output_csv, 'w') as fid:
-    #     fid.write('filename,logit,time,predict\n')
-    #     fid.write('%s,%f,%f,%s\n' % (temp_file.name, logit, toc-tic, state))
     print('\nDONE')
     print(state)
     # print('OUTPUT: %s' % output_csv)
