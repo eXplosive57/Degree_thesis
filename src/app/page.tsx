@@ -5,6 +5,7 @@ import { SparklesPreview } from "./spark-test";
 import './globals.css'
 import { TabsDemo } from './tabs-test';
 import socketIOClient from 'socket.io-client';
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 
 
 
@@ -44,10 +45,37 @@ export default function Home() {
   return (
 
     <main>
+      
       <SparklesPreview />
       <TabsDemo />
 
+      
 
+      <div className="content">
+        <div className="container">
+        <Table aria-label="Example table with dynamic content">
+  <TableHeader>
+    <TableColumn>File Name</TableColumn>
+    <TableColumn>Image</TableColumn>
+    <TableColumn>Action</TableColumn>
+  </TableHeader>
+  <TableBody>
+    {photoList.map((imageUrl, index) => (
+      <TableRow key={index}>
+        <TableCell>{`Photo ${index}`}</TableCell>
+        <TableCell>
+          <img src={imageUrl} alt={`Photo ${index}`} style={{ maxWidth: '100px' }} />
+        </TableCell>
+        <TableCell>
+          <a href={imageUrl} download>Download</a>
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+        </div>
+      </div>
+    
 
     
     

@@ -1,6 +1,6 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root, [data-theme] {
   background-color: black;
@@ -9,6 +9,20 @@ body {
   background-color: black;
   margin: 0;
   padding: 0;
+  
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20rem;
+  
+}
+
+.container {
+  text-align: center; 
+  width: 70%; 
 }
 
 
