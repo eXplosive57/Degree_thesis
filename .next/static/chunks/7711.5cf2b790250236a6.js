@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7711],{7711:function(e,t,n){n.d(t,{loadStrokeColorUpdater:function(){return a}});async function a(e,t=!0){await e.addParticleUpdater("strokeColor",async e=>{let{StrokeColorUpdater:t}=await n.e(7005).then(n.bind(n,7005));return new t(e)},t)}}}]);

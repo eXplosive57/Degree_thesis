@@ -1,0 +1,1 @@
+"use strict";exports.id=174,exports.ids=[174],exports.modules={174:(e,t,a)=>{a.d(t,{loadCircleShape:()=>i});async function i(e,t=!0){let{CircleDrawer:i}=await a.e(5286).then(a.bind(a,5286));await e.addShape("circle",new i,t)}}};

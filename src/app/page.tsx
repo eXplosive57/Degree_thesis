@@ -8,10 +8,18 @@ import socketIOClient from 'socket.io-client';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, RadioGroup, Radio } from "@nextui-org/react";
 
 
+/* need to declare types of data received from server */
+interface result {
+  video: string;
+  frame: string;
+  name: string;
+  anteprima: string;
+  file_name: string
+}
 
 
 export default function Home() {
-  const [photoList, setPhotoList] = useState([]);
+  const [photoList, setPhotoList] = useState<result[]>([]);
 
 
   // Estraggo le foto analizzate salvate nella directory lato server
@@ -70,9 +78,9 @@ export default function Home() {
 
                   {/* ignore errors on imageUrl and name */}
                   <TableCell>
-                    <img src={photo.imageUrl} alt={`Photo ${index}`} style={{ maxWidth: '70px' }} />
+                    <img src= {photo.anteprima} alt={`Photo ${index}`} style={{ maxWidth: '80px' }} />
                   </TableCell>
-                  <TableCell>{photo.name}</TableCell>
+                  <TableCell>{photo.file_name}</TableCell>
                   <TableCell>download</TableCell>
                 </TableRow>
               ))}

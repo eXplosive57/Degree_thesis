@@ -1,0 +1,1 @@
+"use strict";exports.id=1187,exports.ids=[1187],exports.modules={1187:(s,t,e)=>{e.d(t,{LinksPlugin:()=>n});class n{constructor(){this.id="links"}async getPlugin(s){let{LinkInstance:t}=await e.e(918).then(e.bind(e,918));return new t(s)}loadOptions(){}needsPlugin(){return!0}}}};

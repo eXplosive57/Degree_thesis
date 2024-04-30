@@ -1,0 +1,1 @@
+"use strict";exports.id=401,exports.ids=[401],exports.modules={401:(t,a,e)=>{e.d(a,{loadOpacityUpdater:()=>d});async function d(t,a=!0){await t.addParticleUpdater("opacity",async t=>{let{OpacityUpdater:a}=await e.e(6108).then(e.bind(e,6108));return new a(t)},a)}}};

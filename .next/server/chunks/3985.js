@@ -1,0 +1,1 @@
+"use strict";exports.id=3985,exports.ids=[3985],exports.modules={3985:(e,t,s)=>{s.d(t,{Pauser:()=>a});var r=s(9167);class a extends r.L8{constructor(e){super(e),this.handleClickMode=e=>{if("pause"!==e)return;let t=this.container;t.animationStatus?t.pause():t.play()}}clear(){}init(){}interact(){}isEnabled(){return!0}reset(){}}}};

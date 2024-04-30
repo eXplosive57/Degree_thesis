@@ -8,16 +8,13 @@ import tempfile
 from ultralytics.utils.plotting import Annotator
 from collections import Counter
 from flask_cors import CORS
-import uuid
 import base64
 from flask_socketio import SocketIO, emit
-import glob
 import time
-# get the file nam from uplaoded file
-from werkzeug.utils import secure_filename
-import argparse
+import numpy as np
 from PIL import Image
 from resnet50nodown import resnet50nodown
+from typing import List, Dict
 
 
 app = Flask(__name__)
@@ -28,15 +25,21 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 analyzed_photos_dir = 'analyzed_photos'
 
+analyzed_photos = {}  # Dizionario per mantenere i dati delle immagini analizzate
+
+result = {}
+foto = False
+videocheck = False
+
 
 @socketio.on('new_photo_analyzed')
 def handle_new_photo_analyzed():
     # Invia un segnale ai client quando viene analizzata una nuova foto
     socketio.emit('photo_analyzed_notification', namespace='/')
 
-
-@app.route('/photo_list')
-def get_photo_list():
+# load files from dir
+""" @app.route('/photo_list')
+def get_photo_list() -> List[Dict[str, str]]:
     photo_data_list = []
     for filename in os.listdir(analyzed_photos_dir):
         if filename != ".DS_Store":
@@ -47,8 +50,26 @@ def get_photo_list():
                     "imageUrl": f"data:image/jpeg;base64,{image_data}"
                 })
 
-    return jsonify(photo_data_list)
+    return jsonify(photo_data_list) """
 
+@app.route('/photo_list')
+def get_results():
+    global foto, videocheck
+    
+    if foto == True:
+        print("sempre vero")
+        foto = False
+        return jsonify(list(analyzed_photos.values()))
+        
+    elif videocheck == True:
+
+            videocheck = False
+            return jsonify(list(result.values()))
+
+
+
+     
+    
 
 # # Load Hydra configuration file
 # with open("yolo/config/config.yaml") as f:
@@ -94,14 +115,14 @@ def analyze():
             return analyze_photo(uploaded_file, file_name)
         else:
             # aggiungi check formati video
-            return analyze_video(uploaded_file)
+            return analyze_video(uploaded_file, file_name)
     elif selected_model == 'fake':
         return analyze_fake(uploaded_file)
     else:
         return 'Invalid model selected', 400
 
 
-def analyze_photo(photo, nome_file):
+""" def analyze_photo(photo, nome_file):
     # Save the image temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
         photo.save(temp_file.name)
@@ -139,10 +160,51 @@ def analyze_photo(photo, nome_file):
     handle_new_photo_analyzed()
 
     # Return the analyzed image as a response to the client
-    return send_file(analyzed_photo_path, mimetype='image/jpeg')
+    return send_file(analyzed_photo_path, mimetype='image/jpeg') """
+
+def analyze_photo(photo, nome_file):
+    global foto
+
+    # Read the image
+    image = cv2.imdecode(np.fromstring(photo.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+
+    # Analyze the image using the YOLO model
+    results = model.predict(image)
+
+    # Annotate the image with identifying rectangles
+    annotator = Annotator(image)
+    for res in results:
+        for box in res.boxes:
+            box_xy = box.xyxy[0]  # Get the bounding box coordinates
+            cls = box.cls  # Class index
+            annotator.box_label(box_xy, model.names[int(cls)])
+
+    # Get the annotated image
+    annotated_image = annotator.result()
+
+    # Encode the image to base64
+    _, buffer = cv2.imencode('.jpg', annotated_image)
+    encoded_image = base64.b64encode(buffer).decode('utf-8')
+
+    # Add image data to analyzed_photos dictionary
+    analyzed_photos[nome_file] = {
+        "file_name": nome_file,
+        "anteprima": f"data:image/jpeg;base64,{encoded_image}"
+    }
+    foto = True
+    handle_new_photo_analyzed()
+    # Return success message
+    return 'Image analyzed successfully', 200
 
 
-def analyze_video(video):
+
+
+
+
+
+def analyze_video(video, nome_file):
+
+    global videocheck
     # Salvare temporaneamente il video
     with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
         temp_file.write(video.read())
@@ -161,6 +223,8 @@ def analyze_video(video):
     os.makedirs(analyzed_videos_dir, exist_ok=True)
     output_filename = f"analyzed_{video.filename}"
     output_path = os.path.join(analyzed_videos_dir, output_filename)
+
+    frame_output_path = os.path.join(analyzed_videos_dir, f"frame_{nome_file}.jpg")
 
     # Imposta i codec e il frame rate del video di output
     codec = cv2.VideoWriter_fourcc(*'avc1')
@@ -187,6 +251,8 @@ def analyze_video(video):
         if not ret:
             break
 
+        
+
         # Analizza il frame con il modello YOLO
         results_list = model(frame)  # Ogni elemento è un oggetto Results
 
@@ -205,12 +271,48 @@ def analyze_video(video):
         # Salva il frame nel video di output
         out.write(frame)
 
+            # Chiudi il video di input
+    video_capture.release()
+
+    # Chiudi il video di output
+    out.release()
+
+    # Apri il video analizzato
+    video_capture_analyzed = cv2.VideoCapture(output_path)
+
+    # Imposta la posizione dei frame nel video analizzato
+    video_capture_analyzed.set(cv2.CAP_PROP_POS_FRAMES, 2)
+
+    # Estrai il frame desiderato dal video analizzato
+    ret, frame_to_send = video_capture_analyzed.read()
+    if not ret:
+        print("Errore nell'estrazione del frame")
+        return None, None
+
+    # Codifica il frame come immagine JPEG per l'invio al client
+    _, frame_encoded = cv2.imencode('.jpg', frame_to_send)
+    frame_base64 = base64.b64encode(frame_encoded).decode('utf-8')
+
+    cv2.imwrite(frame_output_path, frame_to_send)
     # Rilascia le risorse
     video_capture.release()
     out.release()
+    
+
+    # Codifica il video analizzato come base64 per l'invio al client
+    with open(output_path, 'rb') as video_file:
+        video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
+
+    # Combine video base64 and frame base64 into a dictionary
+    result[nome_file] = {
+        "video": video_base64,
+        "anteprima": f"data:image/jpeg;base64,{frame_base64}",
+        "file_name" : nome_file
+    }
+    videocheck = True
     handle_new_photo_analyzed()
 
-    return 'Video analyzed successfully', 200
+    return 'video analyzed successfully', 200
 
 
 def analyze_fake(photo):
