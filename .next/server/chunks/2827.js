@@ -1,1 +1,0 @@
-"use strict";exports.id=2827,exports.ids=[2827],exports.modules={2827:(t,a,e)=>{e.d(a,{loadParticlesAttractInteraction:()=>r});async function r(t,a=!0){await t.addInteractor("particlesAttract",async t=>{let{Attractor:a}=await e.e(6972).then(e.bind(e,6972));return new a(t)},a)}}};

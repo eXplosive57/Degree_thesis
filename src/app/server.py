@@ -25,9 +25,11 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 analyzed_photos_dir = 'analyzed_photos'
 
-analyzed_photos = {}  # Dizionario per mantenere i dati delle immagini analizzate
+analyzed_photos_dic = {}  # Dizionario per mantenere i dati delle immagini analizzate
 
-result = {}
+result_dic = {}
+
+fake_dic = {}
 foto = False
 videocheck = False
 
@@ -37,34 +39,13 @@ def handle_new_photo_analyzed():
     # Invia un segnale ai client quando viene analizzata una nuova foto
     socketio.emit('photo_analyzed_notification', namespace='/')
 
-# load files from dir
-""" @app.route('/photo_list')
-def get_photo_list() -> List[Dict[str, str]]:
-    photo_data_list = []
-    for filename in os.listdir(analyzed_photos_dir):
-        if filename != ".DS_Store":
-            with open(os.path.join(analyzed_photos_dir, filename), "rb") as image_file:
-                image_data = base64.b64encode(image_file.read()).decode("utf-8")
-                photo_data_list.append({
-                    "name": filename,  # Aggiungi il nome del file all'oggetto JSON
-                    "imageUrl": f"data:image/jpeg;base64,{image_data}"
-                })
-
-    return jsonify(photo_data_list) """
 
 @app.route('/photo_list')
 def get_results():
-    global foto, videocheck
-    
-    if foto == True:
-        print("sempre vero")
-        foto = False
-        return jsonify(list(analyzed_photos.values()))
-        
-    elif videocheck == True:
 
-            videocheck = False
-            return jsonify(list(result.values()))
+        combined_results = {**analyzed_photos_dic, **result_dic, **fake_dic}
+        
+        return jsonify(list(combined_results.values()))
 
 
 
@@ -117,52 +98,15 @@ def analyze():
             # aggiungi check formati video
             return analyze_video(uploaded_file, file_name)
     elif selected_model == 'fake':
-        return analyze_fake(uploaded_file)
+        return analyze_fake(uploaded_file, file_name)
     else:
         return 'Invalid model selected', 400
 
 
-""" def analyze_photo(photo, nome_file):
-    # Save the image temporarily
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
-        photo.save(temp_file.name)
 
-    # Read the image from the temporary file
-    image = cv2.imread(temp_file.name)
-
-    # Analyze the image using the YOLO model
-    results = model.predict(image)
-
-    # Delete the temporary file
-    os.unlink(temp_file.name)
-
-    # Annotate the image with identifying rectangles
-    annotator = Annotator(image)
-    for res in results:
-        for box in res.boxes:
-            box_xy = box.xyxy[0]  # Get the bounding box coordinates
-            cls = box.cls  # Class index
-            annotator.box_label(box_xy, model.names[int(cls)])
-
-    # Get the annotated image
-    annotated_image = annotator.result()
-
-    # Get unique id for every image to save
-    unique_id = uuid.uuid4().hex
-
-    # Save the analyzed image to a folder with a unique name
-    analyzed_photos_dir = 'analyzed_photos'
-    os.makedirs(analyzed_photos_dir, exist_ok=True)
-    analyzed_photo_path = os.path.join(
-        analyzed_photos_dir, f'{nome_file}')
-    cv2.imwrite(analyzed_photo_path, annotated_image)
-
-    handle_new_photo_analyzed()
-
-    # Return the analyzed image as a response to the client
-    return send_file(analyzed_photo_path, mimetype='image/jpeg') """
 
 def analyze_photo(photo, nome_file):
+    
     global foto
 
     # Read the image
@@ -187,7 +131,7 @@ def analyze_photo(photo, nome_file):
     encoded_image = base64.b64encode(buffer).decode('utf-8')
 
     # Add image data to analyzed_photos dictionary
-    analyzed_photos[nome_file] = {
+    analyzed_photos_dic[nome_file] = {
         "file_name": nome_file,
         "anteprima": f"data:image/jpeg;base64,{encoded_image}"
     }
@@ -298,13 +242,13 @@ def analyze_video(video, nome_file):
     video_capture.release()
     out.release()
     
-
+    # PROVA A NON CODIFICARE E INVIA IL VIDEO 
     # Codifica il video analizzato come base64 per l'invio al client
     with open(output_path, 'rb') as video_file:
         video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
 
     # Combine video base64 and frame base64 into a dictionary
-    result[nome_file] = {
+    result_dic[nome_file] = {
         "video": video_base64,
         "anteprima": f"data:image/jpeg;base64,{frame_base64}",
         "file_name" : nome_file
@@ -315,12 +259,10 @@ def analyze_video(video, nome_file):
     return 'video analyzed successfully', 200
 
 
-def analyze_fake(photo):
+def analyze_fake(photo, nome_file):
     # Save the image temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
         photo.save(temp_file.name)
-
-    image = cv2.imread(temp_file.name)
 
     weights_path = ('./weights/gandetection_resnet50nodown_progan.pth')
 
@@ -329,17 +271,23 @@ def analyze_fake(photo):
     net = resnet50nodown(device, weights_path)
 
     # Analyze the received image
-    tic = time.time()
     img = Image.open(temp_file.name).convert('RGB')
     img.load()
     logit = net.apply(img)
-    toc = time.time()
 
     # Determine if the image is fake or real
-    state = 'real' if logit < 0 else 'fake'
-    print('\nDONE')
-    print(state)
-    # print('OUTPUT: %s' % output_csv)
+    state = 'Real' if logit < 0 else 'Fake'
+
+     # Convert the image to base64
+    with open(temp_file.name, 'rb') as f:
+        img_base64 = base64.b64encode(f.read()).decode('utf-8')
+
+    fake_dic[nome_file] = {
+        "state": state,
+        "file_name": nome_file,
+        "anteprima": f"data:image/jpeg;base64,{img_base64}"
+        
+    }
     handle_new_photo_analyzed()
     return 'Daje', 200
 

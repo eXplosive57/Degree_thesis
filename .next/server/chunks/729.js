@@ -1,1 +1,0 @@
-"use strict";exports.id=729,exports.ids=[729],exports.modules={729:(t,e,r)=>{r.d(e,{SquareDrawer:()=>d});let s=Math.sqrt(2);class d{draw(t){!function(t){let{context:e,radius:r}=t,d=r/s,o=2*d;e.rect(-d,-d,o,o)}(t)}getSidesCount(){return 4}}}};

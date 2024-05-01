@@ -5,16 +5,15 @@ import { SparklesPreview } from "./spark-test";
 import './globals.css'
 import { TabsDemo } from './tabs-test';
 import socketIOClient from 'socket.io-client';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, RadioGroup, Radio } from "@nextui-org/react";
-
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
+import arrow from './icon/arrow2.png';
 
 /* need to declare types of data received from server */
 interface result {
   video: string;
-  frame: string;
-  name: string;
   anteprima: string;
-  file_name: string
+  file_name: string;
+  state: string
 }
 
 
@@ -64,25 +63,50 @@ export default function Home() {
           <Table
             color={'primary'}
             selectionMode="multiple"
-            aria-label="Example static collection table"
           >
             <TableHeader>
               <TableColumn>IMAGE</TableColumn>
               <TableColumn>NAME</TableColumn>
+              <TableColumn>STATE</TableColumn>
               <TableColumn>ACTION</TableColumn>
-
+              
             </TableHeader>
             <TableBody>
-              {photoList.map((photo, index) => ( // Utilizza photo come elemento corrente
+              {photoList.map((element, index) => ( // Utilizza photo come elemento corrente
                 <TableRow key={index}>
-
-                  {/* ignore errors on imageUrl and name */}
                   <TableCell>
-                    <img src= {photo.anteprima} alt={`Photo ${index}`} style={{ maxWidth: '80px' }} />
+                    <img src={element.anteprima} alt={`Photo ${index}`} style={{ maxWidth: '90px', borderRadius: '6px' }} />
                   </TableCell>
-                  <TableCell>{photo.file_name}</TableCell>
-                  <TableCell>download</TableCell>
+                  <TableCell>{element.file_name}</TableCell>
+                  <TableCell>
+                    {element.state ? (
+                        element.state
+                    )
+                    :
+                    (
+                      <span>Analyzed</span>
+                    )
+                    
+                    
+                  }</TableCell>
+                  {/* check if the element is a video or not */}
+                  <TableCell>
+                    {element.video ? (
+                      <div>
+                        <a href={`data:video/mp4;base64,${element.video}`} download={`${element.file_name}.mp4`}><img src={arrow.src}/></a>
+                      </div>
+                    ) : (
+                      <div>
+                        <a href={element.anteprima} download><img src={arrow.src} alt=''/></a>
+                      </div>
+                    )
+                    
+                  }
+                  </TableCell>
+
                 </TableRow>
+
+
               ))}
             </TableBody>
           </Table>

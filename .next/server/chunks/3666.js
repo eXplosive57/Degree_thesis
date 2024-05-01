@@ -1,1 +1,0 @@
-"use strict";exports.id=3666,exports.ids=[3666],exports.modules={3666:(i,t,e)=>{e.d(t,{loadLinksPlugin:()=>n});async function n(i,t=!0){let{LinksPlugin:n}=await e.e(1187).then(e.bind(e,1187)),s=new n;await i.addPlugin(s,t)}}};
