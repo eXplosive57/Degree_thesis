@@ -6,6 +6,7 @@ from ultralytics import YOLO
 import cv2
 import tempfile
 from ultralytics.utils.plotting import Annotator
+from ultralytics.solutions import speed_estimation
 from collections import Counter
 from flask_cors import CORS
 import base64
@@ -26,10 +27,11 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 analyzed_photos_dir = 'analyzed_photos'
 
 analyzed_photos_dic = {}  # Dizionario per mantenere i dati delle immagini analizzate
-
 result_dic = {}
-
 fake_dic = {}
+speed_dic = {}
+
+
 foto = False
 videocheck = False
 
@@ -43,7 +45,7 @@ def handle_new_photo_analyzed():
 @app.route('/photo_list')
 def get_results():
 
-        combined_results = {**analyzed_photos_dic, **result_dic, **fake_dic}
+        combined_results = {**analyzed_photos_dic, **result_dic, **fake_dic, **speed_dic}
         
         return jsonify(list(combined_results.values()))
 
@@ -100,7 +102,8 @@ def analyze():
     elif selected_model == 'fake':
         return analyze_fake(uploaded_file, file_name)
     else:
-        return 'Invalid model selected', 400
+        if selected_model == 'speed':
+            return analyze_speed(uploaded_file, file_name)
 
 
 
@@ -259,6 +262,90 @@ def analyze_video(video, nome_file):
     return 'video analyzed successfully', 200
 
 
+
+
+
+def analyze_speed(video, nome_file):
+
+    names = model.model.names
+    
+    # Salvare temporaneamente il video
+    temp_video = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
+    video.save(temp_video.name)
+    
+    # Aprire il video
+    cap = cv2.VideoCapture(temp_video.name)
+    assert cap.isOpened(), "Errore durante la lettura del file video"
+    
+    # Proprietà del video
+    w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
+    
+    # Video writer per il video analizzato
+    analyzed_video_path = tempfile.NamedTemporaryFile(delete=False, suffix='.avi').name
+    video_writer = cv2.VideoWriter(analyzed_video_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+    
+    # Punti della linea per la stima della velocità
+    line_pts = [(0, h//2), (w, h//2)]
+    
+    # Inizializza l'oggetto speed-estimation
+    speed_obj = speed_estimation.SpeedEstimator()
+    speed_obj.set_args(reg_pts=line_pts, names=names, view_img=True)
+    
+    # Ciclo sui frame del video
+    while cap.isOpened():
+        success, frame = cap.read()
+        if not success:
+            print("Frame video vuoto o elaborazione video completata.")
+            break
+        
+        # Esegui il rilevamento e il tracciamento degli oggetti con YOLO
+        tracks = model.track(frame, persist=True, show=False)
+        
+        # Esegui la stima della velocità
+        frame = speed_obj.estimate_speed(frame, tracks)
+        
+        # Scrivi il frame nel video analizzato
+        video_writer.write(frame)
+    
+    cap.release()
+    video_writer.release()
+    
+    # Converti il frame in base64
+    cap_analyzed = cv2.VideoCapture(analyzed_video_path)
+    cap_analyzed.set(cv2.CAP_PROP_POS_FRAMES, 2)  # Imposta la posizione del frame
+    
+    ret, analyzed_frame = cap_analyzed.read()
+    _, encoded_frame = cv2.imencode('.jpg', analyzed_frame)
+    analyzed_frame_base64 = base64.b64encode(encoded_frame).decode('utf-8')
+    cap_analyzed.release()
+    
+    # Codifica il video analizzato come base64 per l'invio al client
+    with open(analyzed_video_path, 'rb') as video_file:
+        analyzed_video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
+
+
+
+    # Combine video base64 and frame base64 into a dictionary
+    speed_dic[nome_file] = {
+        "video": analyzed_video_base64,
+        "anteprima": f"data:image/jpeg;base64,{analyzed_frame_base64}",
+        "file_name" : nome_file
+    }
+
+
+
+
+
+
+
+
+    handle_new_photo_analyzed()
+
+    return 'Video analizzato con successo', 200
+
+
+
+
 def analyze_fake(photo, nome_file):
     # Save the image temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
@@ -282,7 +369,7 @@ def analyze_fake(photo, nome_file):
     with open(temp_file.name, 'rb') as f:
         img_base64 = base64.b64encode(f.read()).decode('utf-8')
 
-    fake_dic[nome_file] = {
+    speed_dic[nome_file] = {
         "state": state,
         "file_name": nome_file,
         "anteprima": f"data:image/jpeg;base64,{img_base64}"
