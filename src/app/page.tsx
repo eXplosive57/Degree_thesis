@@ -6,7 +6,11 @@ import './globals.css'
 import { TabsDemo } from './tabs-test';
 import socketIOClient from 'socket.io-client';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
-import arrow from './icon/arrow2.png';
+import download from './icon/download.png';
+import green_icon from './icon/green_icon.png';
+import red_icon from './icon/red_icon.png';
+import analyze from './icon/analyze.png';
+import sapienza from './icon/sap_logo.jpg';
 
 /* need to declare types of data received from server */
 interface result {
@@ -72,11 +76,26 @@ export default function Home() {
                   <TableCell>{element.file_name}</TableCell>
                   <TableCell>
                     {element.state ? (
-                        element.state
+                        element.state == 'Real' ?(
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            
+                            {element.state}   <img src={green_icon.src} alt="boh" style={{ maxWidth: '25px', maxHeight: '25px', marginLeft: '5px' }} />
+                              
+                          </div>
+                        ) : (
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                              {element.state} <img src={red_icon.src} alt="boh" style={{ maxWidth: '25px', maxHeight: '25px', marginLeft: '5px' }} />
+                              
+                          </div>
+                        )
                     )
                     :
                     (
-                      <span>Analyzed</span>
+
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <span>Analyzed</span> <img src={analyze.src} alt="boh" style={{ maxWidth: '25px', maxHeight: '25px', marginLeft: '5px' }} />
+                      </div>
+                      
                     )
                                        
                   }</TableCell>
@@ -84,11 +103,11 @@ export default function Home() {
                   <TableCell>
                     {element.video ? (
                       <div>
-                        <a href={`data:video/mp4;base64,${element.video}`} download={`${element.file_name}.mp4`}><img src={arrow.src}/></a>
+                        <a href={`data:video/mp4;base64,${element.video}`} download={`${element.file_name}.mp4`}><img src={download.src}/></a>
                       </div>
                     ) : (
                       <div>
-                        <a href={element.anteprima} download><img src={arrow.src} alt=''/></a>
+                        <a href={element.anteprima} download><img src={download.src} alt=''/></a>
                       </div>
                     )
                     
@@ -101,6 +120,12 @@ export default function Home() {
           </Table>
         </div>
       </div>
+
+      <footer className="footer">
+    <div>
+      <p>© 2024 Kerrouche Ilyas - Ingegneria Dell'informazione</p> <img src={sapienza.src} alt="Logo" style={{ maxWidth: '200px', maxHeight: '200px' }} />
+    </div>
+  </footer>
     </main >
 
 

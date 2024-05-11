@@ -1,1 +1,0 @@
-"use strict";exports.id=6636,exports.ids=[6636],exports.modules={6636:(t,a,e)=>{e.d(a,{loadStarShape:()=>s});async function s(t,a=!0){let{StarDrawer:s}=await e.e(793).then(e.bind(e,793));await t.addShape("star",new s,a)}}};

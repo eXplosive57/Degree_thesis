@@ -1,1 +1,0 @@
-"use strict";exports.id=690,exports.ids=[690],exports.modules={690:(t,s,e)=>{e.d(s,{loadParticlesCollisionsInteraction:()=>i});async function i(t,s=!0){await t.addInteractor("particlesCollisions",async t=>{let{Collider:s}=await e.e(3930).then(e.bind(e,3930));return new s(t)},s)}}};
