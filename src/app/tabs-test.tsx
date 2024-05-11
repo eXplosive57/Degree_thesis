@@ -12,7 +12,7 @@ export function TabsDemo() {
             value: "",
             content: (
                 <div className="w-full relative h-auto rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-blue-500 to-violet-900 ">
-                    <p>SELECT MODEL</p>
+                    <p>SELECT TASK</p>
                     {/* <h1>DRAG AND DROP FOTO</h1> */}
                     <Dropzone />
                 </div>

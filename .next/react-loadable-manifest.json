@@ -1,414 +1,414 @@
 {
   "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/move-base": {
-    "id": "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/move-base",
+    "id": 9046,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_move-base_browser_index_js.js"
+      "static/chunks/9046.94d7df3c68f7786e.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/shape-circle": {
-    "id": "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/shape-circle",
+    "id": 4140,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-circle_browser_index_js.js"
+      "static/chunks/4140.18bda8086a8af72a.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-color": {
-    "id": "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-color",
+    "id": 30,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-color_browser_index_js.js"
+      "static/chunks/30.4bc167e4940d7a32.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-opacity": {
-    "id": "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-opacity",
+    "id": 5968,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-opacity_browser_index_js.js"
+      "static/chunks/5968.3a3c64797855cae1.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-out-modes": {
-    "id": "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-out-modes",
+    "id": 1476,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-out-modes_browser_index_js.js"
+      "static/chunks/3217.8fd16d1eaa9a0b51.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-size": {
-    "id": "..\\node_modules\\@tsparticles\\basic\\browser\\index.js -> @tsparticles/updater-size",
+    "id": 1319,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-size_browser_index_js.js"
+      "static/chunks/1319.8857df145c7c1fac.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\engine\\browser\\Core\\Engine.js -> ./Container.js": {
-    "id": "..\\node_modules\\@tsparticles\\engine\\browser\\Core\\Engine.js -> ./Container.js",
+    "id": 6700,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_engine_browser_Core_Container_js.js"
+      "static/chunks/6700.75296c111edc3cd0.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-attract\\browser\\index.js -> ./Attractor.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-attract\\browser\\index.js -> ./Attractor.js",
+    "id": 2081,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-attract_browser_Attractor_js.js"
+      "static/chunks/2081.cae99542e7b07b7a.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-bounce\\browser\\index.js -> ./Bouncer.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-bounce\\browser\\index.js -> ./Bouncer.js",
+    "id": 6054,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-bounce_browser_Bouncer_js.js"
+      "static/chunks/6054.b35757a1e2300190.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-bubble\\browser\\index.js -> ./Bubbler.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-bubble\\browser\\index.js -> ./Bubbler.js",
+    "id": 6398,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-bubble_browser_Bubbler_js.js"
+      "static/chunks/6398.adc2a005b5edf866.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-connect\\browser\\index.js -> ./Connector.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-connect\\browser\\index.js -> ./Connector.js",
+    "id": 3742,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-connect_browser_Connector_js.js"
+      "static/chunks/3742.a41ba025529f3ade.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-grab\\browser\\index.js -> ./Grabber.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-grab\\browser\\index.js -> ./Grabber.js",
+    "id": 9767,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-grab_browser_Grabber_js.js"
+      "static/chunks/9767.0bf56a606de3b40f.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-pause\\browser\\index.js -> ./Pauser.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-pause\\browser\\index.js -> ./Pauser.js",
+    "id": 2328,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-pause_browser_Pauser_js.js"
+      "static/chunks/2328.2e4c84b6336f64ef.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-push\\browser\\index.js -> ./Pusher.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-push\\browser\\index.js -> ./Pusher.js",
+    "id": 337,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-push_browser_Pusher_js.js"
+      "static/chunks/337.3cd25fbf39bc3876.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-remove\\browser\\index.js -> ./Remover.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-remove\\browser\\index.js -> ./Remover.js",
+    "id": 7375,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-remove_browser_Remover_js.js"
+      "static/chunks/7375.6d7ab0ba2e27281f.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-repulse\\browser\\index.js -> ./Repulser.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-repulse\\browser\\index.js -> ./Repulser.js",
+    "id": 5996,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-repulse_browser_Repulser_js.js"
+      "static/chunks/5996.7ff22337a2c5e96e.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-external-slow\\browser\\index.js -> ./Slower.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-external-slow\\browser\\index.js -> ./Slower.js",
+    "id": 4226,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-slow_browser_Slower_js.js"
+      "static/chunks/4226.d7e4b6745546f0c3.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-particles-attract\\browser\\index.js -> ./Attractor.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-particles-attract\\browser\\index.js -> ./Attractor.js",
+    "id": 6263,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-attract_browser_Attractor_js.js"
+      "static/chunks/6263.83c54379d9c3013e.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-particles-collisions\\browser\\index.js -> ./Collider.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-particles-collisions\\browser\\index.js -> ./Collider.js",
+    "id": 6776,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-collisions_browser_Collider_js.js"
+      "static/chunks/6776.fd3d4a3dafadb8f0.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\LinksPlugin.js -> ./LinkInstance.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\LinksPlugin.js -> ./LinkInstance.js",
+    "id": 1003,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-links_browser_LinkInstance_js.js"
+      "static/chunks/1003.b34cdd7549c9a443.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\index.js -> ./interaction.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\index.js -> ./interaction.js",
+    "id": 9836,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-links_browser_interaction_js.js"
+      "static/chunks/9836.68a760d4734338d4.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\index.js -> ./plugin.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\index.js -> ./plugin.js",
+    "id": 8417,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-links_browser_plugin_js.js"
+      "static/chunks/8417.efe8face073b285b.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\interaction.js -> ./Linker.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\interaction.js -> ./Linker.js",
+    "id": 4143,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-links_browser_Linker_js.js"
+      "static/chunks/4143.643e3feccdc5ceac.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\plugin.js -> ./LinksPlugin.js": {
-    "id": "..\\node_modules\\@tsparticles\\interaction-particles-links\\browser\\plugin.js -> ./LinksPlugin.js",
+    "id": 3450,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-links_browser_LinksPlugin_js.js"
+      "static/chunks/3450.41c45e4bc1d8b77c.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\move-base\\browser\\index.js -> ./BaseMover.js": {
-    "id": "..\\node_modules\\@tsparticles\\move-base\\browser\\index.js -> ./BaseMover.js",
+    "id": 9523,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_move-base_browser_BaseMover_js.js"
+      "static/chunks/9523.29cea15a59e8cca5.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\move-parallax\\browser\\index.js -> ./ParallaxMover.js": {
-    "id": "..\\node_modules\\@tsparticles\\move-parallax\\browser\\index.js -> ./ParallaxMover.js",
+    "id": 6425,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_move-parallax_browser_ParallaxMover_js.js"
+      "static/chunks/6425.34a7707e2903d445.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-circle\\browser\\index.js -> ./CircleDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-circle\\browser\\index.js -> ./CircleDrawer.js",
+    "id": 6163,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-circle_browser_CircleDrawer_js.js"
+      "static/chunks/6163.bf86f651309f6af0.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-emoji\\browser\\index.js -> ./EmojiDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-emoji\\browser\\index.js -> ./EmojiDrawer.js",
+    "id": 2117,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-emoji_browser_EmojiDrawer_js.js"
+      "static/chunks/2117.12168a6b59c84522.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-image\\browser\\GifUtils\\Utils.js -> ../Utils.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-image\\browser\\GifUtils\\Utils.js -> ../Utils.js",
+    "id": 2667,
     "files": []
   },
   "..\\node_modules\\@tsparticles\\shape-image\\browser\\index.js -> ./GifUtils/Utils.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-image\\browser\\index.js -> ./GifUtils/Utils.js",
+    "id": 9605,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-image_browser_GifUtils_Utils_js.js"
+      "static/chunks/9605.0dbe283abbc83bb9.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-image\\browser\\index.js -> ./ImageDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-image\\browser\\index.js -> ./ImageDrawer.js",
+    "id": 8605,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-image_browser_ImageDrawer_js.js"
+      "static/chunks/8605.a22d8acfc3f3df95.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-image\\browser\\index.js -> ./ImagePreloader.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-image\\browser\\index.js -> ./ImagePreloader.js",
+    "id": 8584,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-image_browser_ImagePreloader_js.js"
+      "static/chunks/8584.6556bf4fd22a8e22.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-line\\browser\\index.js -> ./LineDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-line\\browser\\index.js -> ./LineDrawer.js",
+    "id": 5576,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-line_browser_LineDrawer_js.js"
+      "static/chunks/5576.253ffff6275e8ec6.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-polygon\\browser\\index.js -> ./PolygonDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-polygon\\browser\\index.js -> ./PolygonDrawer.js",
+    "id": 9845,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-polygon_browser_PolygonDrawer_js.js"
+      "static/chunks/5778.a5d1206ed61f473e.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-polygon\\browser\\index.js -> ./TriangleDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-polygon\\browser\\index.js -> ./TriangleDrawer.js",
+    "id": 6293,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-polygon_browser_TriangleDrawer_js.js"
+      "static/chunks/6293.e4f2a8c86f5b498d.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-square\\browser\\index.js -> ./SquareDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-square\\browser\\index.js -> ./SquareDrawer.js",
+    "id": 2086,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-square_browser_SquareDrawer_js.js"
+      "static/chunks/2086.a4bb61a68fd69ca0.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\shape-star\\browser\\index.js -> ./StarDrawer.js": {
-    "id": "..\\node_modules\\@tsparticles\\shape-star\\browser\\index.js -> ./StarDrawer.js",
+    "id": 4384,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-star_browser_StarDrawer_js.js"
+      "static/chunks/4384.8b7d00c2644ec40b.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/basic": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/basic",
+    "id": 1869,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_basic_browser_index_js.js"
+      "static/chunks/1869.f6ca01e4d8460d38.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-attract": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-attract",
+    "id": 41,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-attract_browser_index_js.js"
+      "static/chunks/41.41a8dd02b107d61c.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-bounce": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-bounce",
+    "id": 2652,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-bounce_browser_index_js.js"
+      "static/chunks/2652.2f8a516d5e6033eb.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-bubble": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-bubble",
+    "id": 2243,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-bubble_browser_index_js.js"
+      "static/chunks/2243.0c81c680d286cdb3.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-connect": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-connect",
+    "id": 913,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-connect_browser_index_js.js"
+      "static/chunks/913.88773420e63db8c3.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-grab": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-grab",
+    "id": 5383,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-grab_browser_index_js.js"
+      "static/chunks/5383.997afc67f2e230ff.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-pause": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-pause",
+    "id": 981,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-pause_browser_index_js.js"
+      "static/chunks/981.975f31b08b95dd43.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-push": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-push",
+    "id": 1172,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-push_browser_index_js.js"
+      "static/chunks/1172.f3dbe53a68a7f8ba.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-remove": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-remove",
+    "id": 7334,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-remove_browser_index_js.js"
+      "static/chunks/7334.c59e1079b11358fd.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-repulse": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-repulse",
+    "id": 6162,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-repulse_browser_index_js.js"
+      "static/chunks/6162.063d1fb1a8dd19a7.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-slow": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-external-slow",
+    "id": 8147,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-external-slow_browser_index_js.js"
+      "static/chunks/8147.be4f714f9335b97e.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-particles-attract": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-particles-attract",
+    "id": 6212,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-attract_browser_index_js.js"
+      "static/chunks/6212.c47e768a0cc20d13.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-particles-collisions": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-particles-collisions",
+    "id": 9872,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-collisions_browser_index_js.js"
+      "static/chunks/9872.d212aeba441270b5.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-particles-links": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/interaction-particles-links",
+    "id": 5873,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_interaction-particles-links_browser_index_js.js"
+      "static/chunks/5873.bba33b2f395adf92.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/move-parallax": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/move-parallax",
+    "id": 7471,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_move-parallax_browser_index_js.js"
+      "static/chunks/7471.8ef8383935ca08ac.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/plugin-easing-quad": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/plugin-easing-quad",
+    "id": 5835,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_plugin-easing-quad_browser_index_js.js"
+      "static/chunks/5835.132d58e900538acd.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-emoji": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-emoji",
+    "id": 6832,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-emoji_browser_index_js.js"
+      "static/chunks/6832.36392cd5beb28714.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-image": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-image",
+    "id": 786,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-image_browser_index_js.js"
+      "static/chunks/786.d28559daa5b1a909.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-line": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-line",
+    "id": 7042,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-line_browser_index_js.js"
+      "static/chunks/7042.3a5838d34783af8e.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-polygon": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-polygon",
+    "id": 6554,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-polygon_browser_index_js.js"
+      "static/chunks/6554.006862a18f4c2c99.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-square": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-square",
+    "id": 1074,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-square_browser_index_js.js"
+      "static/chunks/1074.6da4984a36c9a208.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-star": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/shape-star",
+    "id": 3169,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_shape-star_browser_index_js.js"
+      "static/chunks/3169.f36715540356efe1.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/updater-life": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/updater-life",
+    "id": 3452,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-life_browser_index_js.js"
+      "static/chunks/3452.110c2cdd07700193.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/updater-rotate": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/updater-rotate",
+    "id": 3202,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-rotate_browser_index_js.js"
+      "static/chunks/3202.b927cb3461ee47ef.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/updater-stroke-color": {
-    "id": "..\\node_modules\\@tsparticles\\slim\\browser\\index.js -> @tsparticles/updater-stroke-color",
+    "id": 7711,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-stroke-color_browser_index_js.js"
+      "static/chunks/7711.5cf2b790250236a6.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\updater-color\\browser\\index.js -> ./ColorUpdater.js": {
-    "id": "..\\node_modules\\@tsparticles\\updater-color\\browser\\index.js -> ./ColorUpdater.js",
+    "id": 6885,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-color_browser_ColorUpdater_js.js"
+      "static/chunks/6885.41e57874448ed5cb.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\updater-life\\browser\\index.js -> ./LifeUpdater.js": {
-    "id": "..\\node_modules\\@tsparticles\\updater-life\\browser\\index.js -> ./LifeUpdater.js",
+    "id": 6724,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-life_browser_LifeUpdater_js.js"
+      "static/chunks/6724.56e7ee1a4f191e62.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\updater-opacity\\browser\\index.js -> ./OpacityUpdater.js": {
-    "id": "..\\node_modules\\@tsparticles\\updater-opacity\\browser\\index.js -> ./OpacityUpdater.js",
+    "id": 907,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-opacity_browser_OpacityUpdater_js.js"
+      "static/chunks/907.71489a8e2dae2dee.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\updater-out-modes\\browser\\index.js -> ./OutOfCanvasUpdater.js": {
-    "id": "..\\node_modules\\@tsparticles\\updater-out-modes\\browser\\index.js -> ./OutOfCanvasUpdater.js",
+    "id": 2621,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-out-modes_browser_OutOfCanvasUpdater_js.js"
+      "static/chunks/2621.43175cc450aa1338.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\updater-rotate\\browser\\index.js -> ./RotateUpdater.js": {
-    "id": "..\\node_modules\\@tsparticles\\updater-rotate\\browser\\index.js -> ./RotateUpdater.js",
+    "id": 5623,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-rotate_browser_RotateUpdater_js.js"
+      "static/chunks/5623.bd7dcccec95b81a0.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\updater-size\\browser\\index.js -> ./SizeUpdater.js": {
-    "id": "..\\node_modules\\@tsparticles\\updater-size\\browser\\index.js -> ./SizeUpdater.js",
+    "id": 4065,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-size_browser_SizeUpdater_js.js"
+      "static/chunks/4065.3fedc4178f806750.js"
     ]
   },
   "..\\node_modules\\@tsparticles\\updater-stroke-color\\browser\\index.js -> ./StrokeColorUpdater.js": {
-    "id": "..\\node_modules\\@tsparticles\\updater-stroke-color\\browser\\index.js -> ./StrokeColorUpdater.js",
+    "id": 7005,
     "files": [
-      "static/chunks/_app-pages-browser_node_modules_tsparticles_updater-stroke-color_browser_StrokeColorUpdater_js.js"
+      "static/chunks/7005.8652e30f30aa5641.js"
     ]
   }
 }

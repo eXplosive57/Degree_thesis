@@ -1,0 +1,1 @@
+"use strict";exports.id=8063,exports.ids=[8063],exports.modules={8063:(e,s,t)=>{t.d(s,{loadBaseMover:()=>a});async function a(e,s=!0){await e.addMover("base",async()=>{let{BaseMover:e}=await t.e(8253).then(t.bind(t,8253));return new e},s)}}};

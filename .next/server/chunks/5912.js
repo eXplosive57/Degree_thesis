@@ -1,0 +1,1 @@
+"use strict";exports.id=5912,exports.ids=[5912],exports.modules={5912:(t,e,a)=>{a.d(e,{loadColorUpdater:()=>r});async function r(t,e=!0){await t.addParticleUpdater("color",async t=>{let{ColorUpdater:e}=await a.e(8043).then(a.bind(a,8043));return new e(t)},e)}}};

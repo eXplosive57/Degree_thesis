@@ -1,0 +1,1 @@
+"use strict";exports.id=1837,exports.ids=[1837],exports.modules={1837:(e,a,t)=>{t.d(a,{loadSquareShape:()=>d});async function d(e,a=!0){let{SquareDrawer:d}=await t.e(729).then(t.bind(t,729));await e.addShape(["edge","square"],new d,a)}}};

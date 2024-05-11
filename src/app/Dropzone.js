@@ -70,7 +70,7 @@ const Dropzone = () => {
                 {isDragActive ? (
                     <p>Drop the files here ...</p>
                 ) : (
-                    <p>Trascina qui i file oppure clicca per selezionare</p>
+                    <p>Drag files here or click to select</p>
                 )}
                 <ul style={fileListStyle}>
                     {files.map((file, index) => (

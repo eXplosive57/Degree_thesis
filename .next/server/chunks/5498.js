@@ -1,0 +1,1 @@
+"use strict";exports.id=5498,exports.ids=[5498],exports.modules={5498:(e,t,a)=>{a.d(t,{loadSizeUpdater:()=>d});async function d(e,t=!0){await e.addParticleUpdater("size",async()=>{let{SizeUpdater:e}=await a.e(6540).then(a.bind(a,6540));return new e},t)}}};

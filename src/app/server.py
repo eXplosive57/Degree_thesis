@@ -7,6 +7,7 @@ import cv2
 import tempfile
 from ultralytics.utils.plotting import Annotator
 from ultralytics.solutions import speed_estimation
+from ultralytics.solutions import ai_gym
 from collections import Counter
 from flask_cors import CORS
 import base64
@@ -30,6 +31,7 @@ analyzed_photos_dic = {}  # Dizionario per mantenere i dati delle immagini anali
 result_dic = {}
 fake_dic = {}
 speed_dic = {}
+gym_dic = {}
 
 
 foto = False
@@ -45,7 +47,7 @@ def handle_new_photo_analyzed():
 @app.route('/photo_list')
 def get_results():
 
-        combined_results = {**analyzed_photos_dic, **result_dic, **fake_dic, **speed_dic}
+        combined_results = {**analyzed_photos_dic, **result_dic, **fake_dic, **speed_dic, **gym_dic}
         
         return jsonify(list(combined_results.values()))
 
@@ -59,7 +61,7 @@ def get_results():
 #     cfg = OmegaConf.load(f)
 
 # Load YOLO model
-model = YOLO('model/yolov8n.pt')
+model = YOLO('models/yolov8n.pt')
 
 
 def predicted_classes(boxes, class_names):
@@ -94,29 +96,34 @@ def analyze():
 
     if selected_model == 'object':
         if file_extension.lower() in ('.jpg', '.jpeg', '.png', '.gif'):
-            print('ok')
             return analyze_photo(uploaded_file, file_name)
         else:
-            # aggiungi check formati video
+            # Aggiungi un controllo per i formati video
             return analyze_video(uploaded_file, file_name)
+        
     elif selected_model == 'fake':
         return analyze_fake(uploaded_file, file_name)
-    else:
-        if selected_model == 'speed':
-            return analyze_speed(uploaded_file, file_name)
+    
+    elif selected_model == 'speed':
+        return analyze_speed(uploaded_file, file_name)
+    
+    elif selected_model == 'gym':
+        return analyze_gym(uploaded_file, file_name)
+
 
 
 
 
 def analyze_photo(photo, nome_file):
     
-    global foto
+    # Save the image temporarily
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
+        photo.save(temp_file.name)
 
-    # Read the image
-    image = cv2.imdecode(np.fromstring(photo.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+    image = cv2.imread(temp_file.name)
 
     # Analyze the image using the YOLO model
-    results = model.predict(image)
+    results = model.predict(temp_file.name)
 
     # Annotate the image with identifying rectangles
     annotator = Annotator(image)
@@ -149,56 +156,38 @@ def analyze_photo(photo, nome_file):
 
 
 
-def analyze_video(video, nome_file):
 
-    global videocheck
+
+def analyze_video(video, nome_file):
+    
     # Salvare temporaneamente il video
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_file:
-        temp_file.write(video.read())
-        temp_file_path = temp_file.name
+    temp_video = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
+    video.save(temp_video.name)
 
     # Apri il video
-    video_capture = cv2.VideoCapture(temp_file_path)
+    video_capture = cv2.VideoCapture(temp_video.name)
 
     # Controlla se l'apertura del video è avvenuta correttamente
     if not video_capture.isOpened():
         print("Errore nell'apertura del video")
         return None
 
-    # Percorso completo del video di output nella cartella analyzed_video
-    analyzed_videos_dir = 'analyzed_video'
-    os.makedirs(analyzed_videos_dir, exist_ok=True)
-    output_filename = f"analyzed_{video.filename}"
-    output_path = os.path.join(analyzed_videos_dir, output_filename)
-
-    frame_output_path = os.path.join(analyzed_videos_dir, f"frame_{nome_file}.jpg")
+    analyzed_video_path = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4').name
+    frame_output_path = os.path.join(tempfile.gettempdir(), f"frame_{nome_file}.jpg")
 
     # Imposta i codec e il frame rate del video di output
-    codec = cv2.VideoWriter_fourcc(*'avc1')
     fps = int(video_capture.get(cv2.CAP_PROP_FPS))
     frame_size = (int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
                   int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 
-    # Controlla se il frame rate è valido
-    if fps <= 0:
-        print("Frame rate non valido")
-        return None
-
     # Crea il video di output
-    out = cv2.VideoWriter(output_path, codec, fps, frame_size)
-
-    # Controlla se il video di output è stato creato correttamente
-    if not out.isOpened():
-        print("Errore nella creazione del video di output")
-        return None
+    out = cv2.VideoWriter(analyzed_video_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, frame_size)
 
     # Ciclo sui frame del video di input
     while True:
         ret, frame = video_capture.read()
         if not ret:
             break
-
-        
 
         # Analizza il frame con il modello YOLO
         results_list = model(frame)  # Ogni elemento è un oggetto Results
@@ -215,17 +204,15 @@ def analyze_video(video, nome_file):
                 cv2.putText(frame, class_name, (int(box_xy[0]), int(
                     box_xy[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        # Salva il frame nel video di output
+        # Scrivi il frame nel video di output
         out.write(frame)
 
-            # Chiudi il video di input
+    # Rilascia le risorse
     video_capture.release()
-
-    # Chiudi il video di output
     out.release()
 
     # Apri il video analizzato
-    video_capture_analyzed = cv2.VideoCapture(output_path)
+    video_capture_analyzed = cv2.VideoCapture(analyzed_video_path)
 
     # Imposta la posizione dei frame nel video analizzato
     video_capture_analyzed.set(cv2.CAP_PROP_POS_FRAMES, 2)
@@ -240,23 +227,18 @@ def analyze_video(video, nome_file):
     _, frame_encoded = cv2.imencode('.jpg', frame_to_send)
     frame_base64 = base64.b64encode(frame_encoded).decode('utf-8')
 
-    cv2.imwrite(frame_output_path, frame_to_send)
     # Rilascia le risorse
-    video_capture.release()
-    out.release()
-    
-    # PROVA A NON CODIFICARE E INVIA IL VIDEO 
+    video_capture_analyzed.release()
+
     # Codifica il video analizzato come base64 per l'invio al client
-    with open(output_path, 'rb') as video_file:
+    with open(analyzed_video_path, 'rb') as video_file:
         video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
 
-    # Combine video base64 and frame base64 into a dictionary
     result_dic[nome_file] = {
         "video": video_base64,
         "anteprima": f"data:image/jpeg;base64,{frame_base64}",
         "file_name" : nome_file
     }
-    videocheck = True
     handle_new_photo_analyzed()
 
     return 'video analyzed successfully', 200
@@ -266,82 +248,77 @@ def analyze_video(video, nome_file):
 
 
 def analyze_speed(video, nome_file):
-
-    names = model.model.names
-    
-    # Salvare temporaneamente il video
-    temp_video = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
-    video.save(temp_video.name)
-    
-    # Aprire il video
-    cap = cv2.VideoCapture(temp_video.name)
-    assert cap.isOpened(), "Errore durante la lettura del file video"
-    
-    # Proprietà del video
-    w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
-    
-    # Video writer per il video analizzato
-    analyzed_video_path = tempfile.NamedTemporaryFile(delete=False, suffix='.avi').name
-    video_writer = cv2.VideoWriter(analyzed_video_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
-    
-    # Punti della linea per la stima della velocità
-    line_pts = [(0, h//2), (w, h//2)]
-    
-    # Inizializza l'oggetto speed-estimation
-    speed_obj = speed_estimation.SpeedEstimator()
-    speed_obj.set_args(reg_pts=line_pts, names=names, view_img=True)
-    
-    # Ciclo sui frame del video
-    while cap.isOpened():
-        success, frame = cap.read()
-        if not success:
-            print("Frame video vuoto o elaborazione video completata.")
-            break
+        names = model.model.names
         
-        # Esegui il rilevamento e il tracciamento degli oggetti con YOLO
-        tracks = model.track(frame, persist=True, show=False)
+        # Salvare temporaneamente il video
+        temp_video = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4')
+        video.save(temp_video.name)
         
-        # Esegui la stima della velocità
-        frame = speed_obj.estimate_speed(frame, tracks)
+        # Aprire il video
+        cap = cv2.VideoCapture(temp_video.name)
+        assert cap.isOpened(), "Errore durante la lettura del file video"
         
-        # Scrivi il frame nel video analizzato
-        video_writer.write(frame)
+        # Proprietà del video
+        w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
+        
+        # Video writer per il video analizzato
+        analyzed_video_path = tempfile.NamedTemporaryFile(delete=True, suffix='.avi').name
+        video_writer = cv2.VideoWriter(analyzed_video_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+        
+        # Punti della linea per la stima della velocità
+        line_pts = [(0, h//2), (w, h//2)]
+        
+        # Inizializza l'oggetto speed-estimation
+        speed_obj = speed_estimation.SpeedEstimator()
+        speed_obj.set_args(reg_pts=line_pts, names=names, view_img=False)
+        
+        # Ciclo sui frame del video
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                print("Frame video vuoto o elaborazione video completata.")
+                break
+            
+            # Esegui il rilevamento e il tracciamento degli oggetti con YOLO
+            tracks = model.track(frame, persist=True, show=False)
+            
+            # Esegui la stima della velocità
+            frame = speed_obj.estimate_speed(frame, tracks)
+            
+            # Scrivi il frame nel video analizzato
+            video_writer.write(frame)
+        
+
+
+        cap.release()
+
+        video_writer.release()
+        
+        # Converti il frame in base64
+        cap_analyzed = cv2.VideoCapture(analyzed_video_path)
+        cap_analyzed.set(cv2.CAP_PROP_POS_FRAMES, 2)  # Imposta la posizione del frame
+        
+        ret, analyzed_frame = cap_analyzed.read()
+        _, encoded_frame = cv2.imencode('.jpg', analyzed_frame)
+        analyzed_frame_base64 = base64.b64encode(encoded_frame).decode('utf-8')
+        
+        
+        # Codifica il video analizzato come base64 per l'invio al client
+        with open(analyzed_video_path, 'rb') as video_file:
+            analyzed_video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
     
-    cap.release()
-    video_writer.release()
+        # cap_analyzed.release()
     
-    # Converti il frame in base64
-    cap_analyzed = cv2.VideoCapture(analyzed_video_path)
-    cap_analyzed.set(cv2.CAP_PROP_POS_FRAMES, 2)  # Imposta la posizione del frame
+        # Combine video base64 and frame base64 into a dictionary
+        speed_dic[nome_file] = {
+            "video": analyzed_video_base64,
+            "anteprima": f"data:image/jpeg;base64,{analyzed_frame_base64}",
+            "file_name" : nome_file
+        }
     
-    ret, analyzed_frame = cap_analyzed.read()
-    _, encoded_frame = cv2.imencode('.jpg', analyzed_frame)
-    analyzed_frame_base64 = base64.b64encode(encoded_frame).decode('utf-8')
-    cap_analyzed.release()
-    
-    # Codifica il video analizzato come base64 per l'invio al client
-    with open(analyzed_video_path, 'rb') as video_file:
-        analyzed_video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
+        handle_new_photo_analyzed()
 
-
-
-    # Combine video base64 and frame base64 into a dictionary
-    speed_dic[nome_file] = {
-        "video": analyzed_video_base64,
-        "anteprima": f"data:image/jpeg;base64,{analyzed_frame_base64}",
-        "file_name" : nome_file
-    }
-
-
-
-
-
-
-
-
-    handle_new_photo_analyzed()
-
-    return 'Video analizzato con successo', 200
+        return 'Video analizzato con successo', 200
 
 
 
@@ -378,6 +355,71 @@ def analyze_fake(photo, nome_file):
     handle_new_photo_analyzed()
     return 'Daje', 200
 
+
+
+def analyze_gym(video, nome_file):
+        
+        model = YOLO("models/yolov8n-pose.pt")
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_video:
+             video.save(temp_video.name)
+        
+        # Apri il video
+        video_capture = cv2.VideoCapture(temp_video.name)
+        assert video_capture.isOpened(), "Error reading video file"
+        # Controlla se l'apertura del video è avvenuta correttamente
+        if not video_capture.isOpened():
+            return "Errore nell'apertura del video", 500
+
+        # Proprietà del video
+        w, h, fps = (int(video_capture.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
+        
+        analyzed_video_path = tempfile.NamedTemporaryFile(delete=True, suffix='.avi').name
+
+        # Video writer per il video analizzato
+        video_writer = cv2.VideoWriter(analyzed_video_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
+        
+        # Inizializza l'oggetto AI GYM
+        gym_object = ai_gym.AIGym()  
+        gym_object.set_args(line_thickness=2, view_img=False, pose_type="pushup", kpts_to_check=[5, 7, 9])
+        
+        frame_count = 0
+        while video_capture.isOpened():
+            success, im0 = video_capture.read()
+            if not success:
+                print("Frame video vuoto o elaborazione video completata.")
+                break
+            
+            frame_count += 1
+            results = model.track(im0, verbose=False)  # Tracking recommended
+            im0 = gym_object.start_counting(im0, results, frame_count)
+            video_writer.write(im0)
+
+        
+        cv2.destroyAllWindows()
+        video_writer.release()
+        print('ok')
+
+        cap_analyzed = cv2.VideoCapture(analyzed_video_path)
+        cap_analyzed.set(cv2.CAP_PROP_POS_FRAMES, 2)  # Imposta la posizione del frame
+        
+        ret, analyzed_frame = cap_analyzed.read()
+        _, encoded_frame = cv2.imencode('.jpg', analyzed_frame)
+        analyzed_frame_base64 = base64.b64encode(encoded_frame).decode('utf-8')
+        
+        with open(analyzed_video_path, 'rb') as video_file:
+            analyzed_video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
+            
+        cap_analyzed.release()
+    
+        # Combine video base64 and frame base64 into a dictionary
+        gym_dic[nome_file] = {
+            "video": analyzed_video_base64,
+            "anteprima": f"data:image/jpeg;base64,{analyzed_frame_base64}",
+            "file_name" : nome_file
+        }
+    
+        handle_new_photo_analyzed()
+        return 'Daje', 200
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

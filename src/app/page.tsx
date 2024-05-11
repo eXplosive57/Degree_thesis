@@ -21,7 +21,6 @@ export default function Home() {
   const [photoList, setPhotoList] = useState<result[]>([]);
 
 
-  // Estraggo le foto analizzate salvate nella directory lato server
   async function fetchPhotoList() {
     try {
       const response = await fetch('http://127.0.0.1:5000/photo_list');
@@ -37,9 +36,6 @@ export default function Home() {
     const socket = socketIOClient('http://127.0.0.1:5000')
 
     socket.on('photo_analyzed_notification', () => {
-      // quando ricevo una notifica dal client, aggiorno lista foto
-
-      // -------------- PROVA A METTERE QUI IL LOADING ANIMAZIONE --------------
       fetchPhotoList();
     });
   }, []);
@@ -48,16 +44,12 @@ export default function Home() {
     fetchPhotoList();
   }, []);// Le parentesi quadre vuote indicano che questo effetto non dipende da nessuna variabile e quindi verrà eseguito solo una volta dopo il montaggio del componente.
 
-
   return (
 
     <main className="dark text-foreground bg-background">
 
       <SparklesPreview />
       <TabsDemo />
-
-
-
       <div className="content">
         <div className="container">
           <Table
@@ -86,8 +78,7 @@ export default function Home() {
                     (
                       <span>Analyzed</span>
                     )
-                    
-                    
+                                       
                   }</TableCell>
                   {/* check if the element is a video or not */}
                   <TableCell>
@@ -105,22 +96,11 @@ export default function Home() {
                   </TableCell>
 
                 </TableRow>
-
-
               ))}
             </TableBody>
           </Table>
-
-
         </div>
       </div>
-
-
-
-
-
-
-
     </main >
 
 
