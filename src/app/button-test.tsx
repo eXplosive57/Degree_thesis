@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Toaster, toast } from 'sonner';
 import { ButtonsCard } from './components/ui/button';
 
 export function TailwindcssButtons({ analyzePhoto }: { analyzePhoto: () => void }) {
     return (
         <div>
-            <Toaster position="top-center" />
+            
             {buttons.map((button, idx) => (
                 <ButtonsCard key={idx} onClick={analyzePhoto}>
                     {button.component}

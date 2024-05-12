@@ -32,16 +32,14 @@ const Dropzone = () => {
 
 
 
-                setLoading(false);  // Imposta lo stato di caricamento su false dopo che l'analisi è completa
+                setLoading(false);  
             } catch (error) {
                 console.error('Errore durante l\'analisi della foto:', error);
-                setLoading(false); // Assicurati che lo stato di caricamento sia impostato su false in caso di errore
             }
         }
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
     return (
         <div>
 
@@ -89,8 +87,11 @@ const Dropzone = () => {
                         aria-label="Loading Spinner"
                         data-testid="loader"
                     />
-                </div> : null
-            } {/* Mostra l'animazione di caricamento se loading è true */}
+                </div>
+                       
+                : null  
+                
+            } 
 
             <TailwindcssButtons analyzePhoto={analyzePhoto}></TailwindcssButtons>
         </div >

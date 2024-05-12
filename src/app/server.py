@@ -62,6 +62,7 @@ def get_results():
 
 # Load YOLO model
 model = YOLO('models/yolov8n.pt')
+model2= YOLO('models/yolov8x.pt')
 
 
 def predicted_classes(boxes, class_names):
@@ -120,40 +121,34 @@ def analyze_photo(photo, nome_file):
     with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
         photo.save(temp_file.name)
 
-    image = cv2.imread(temp_file.name)
+        image = cv2.imread(temp_file.name)
 
-    # Analyze the image using the YOLO model
-    results = model.predict(temp_file.name)
+        # Analyze the image using the YOLO model
+        results = model2.predict(image)
 
-    # Annotate the image with identifying rectangles
-    annotator = Annotator(image)
-    for res in results:
-        for box in res.boxes:
-            box_xy = box.xyxy[0]  # Get the bounding box coordinates
-            cls = box.cls  # Class index
-            annotator.box_label(box_xy, model.names[int(cls)])
-
-    # Get the annotated image
-    annotated_image = annotator.result()
-
-    # Encode the image to base64
-    _, buffer = cv2.imencode('.jpg', annotated_image)
-    encoded_image = base64.b64encode(buffer).decode('utf-8')
-
-    # Add image data to analyzed_photos dictionary
-    analyzed_photos_dic[nome_file] = {
-        "file_name": nome_file,
-        "anteprima": f"data:image/jpeg;base64,{encoded_image}"
-    }
-    foto = True
-    handle_new_photo_analyzed()
-    # Return success message
-    return 'Image analyzed successfully', 200
+        # Annotate the image with identifying rectangles
+        # Loop through the results and draw bounding boxes on the image
+        for res in results:
+            for box in res.boxes:
+                box_xy = box.xyxy[0]  # Get the bounding box coordinates
+                cls = box.cls  # Class index
+                class_name = model.names[int(cls)]  # Get the class name
+                cv2.rectangle(image, (int(box_xy[0]), int(box_xy[1])), (int(box_xy[2]), int(box_xy[3])), (0, 255, 0), 2)
+                cv2.putText(image, class_name, (int(box_xy[0]), int(box_xy[1]) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
 
 
+        # Encode the image to base64
+        _, buffer = cv2.imencode('.jpg', image)
+        encoded_image = base64.b64encode(buffer).decode('utf-8')
 
-
+        # Add image data to analyzed_photos dictionary
+        analyzed_photos_dic[nome_file] = {
+            "file_name": nome_file,
+            "anteprima": f"data:image/jpeg;base64,{encoded_image}"
+        }
+        handle_new_photo_analyzed()
+        return 'Image analyzed successfully', 200
 
 
 
@@ -173,7 +168,6 @@ def analyze_video(video, nome_file):
         return None
 
     analyzed_video_path = tempfile.NamedTemporaryFile(delete=False, suffix='.mp4').name
-    frame_output_path = os.path.join(tempfile.gettempdir(), f"frame_{nome_file}.jpg")
 
     # Imposta i codec e il frame rate del video di output
     fps = int(video_capture.get(cv2.CAP_PROP_FPS))
@@ -307,7 +301,7 @@ def analyze_speed(video, nome_file):
         with open(analyzed_video_path, 'rb') as video_file:
             analyzed_video_base64 = base64.b64encode(video_file.read()).decode('utf-8')
     
-        # cap_analyzed.release()
+        cap_analyzed.release()
     
         # Combine video base64 and frame base64 into a dictionary
         speed_dic[nome_file] = {
@@ -397,7 +391,6 @@ def analyze_gym(video, nome_file):
         
         cv2.destroyAllWindows()
         video_writer.release()
-        print('ok')
 
         cap_analyzed = cv2.VideoCapture(analyzed_video_path)
         cap_analyzed.set(cv2.CAP_PROP_POS_FRAMES, 2)  # Imposta la posizione del frame

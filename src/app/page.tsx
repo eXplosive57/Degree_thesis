@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { ThreeDCardDemo } from "./3d-test";
 import { SparklesPreview } from "./spark-test";
 import './globals.css'
 import { TabsDemo } from './tabs-test';
@@ -11,6 +10,7 @@ import green_icon from './icon/green_icon.png';
 import red_icon from './icon/red_icon.png';
 import analyze from './icon/analyze.png';
 import sapienza from './icon/sap_logo.jpg';
+import { Toaster, toast } from 'sonner'
 
 /* need to declare types of data received from server */
 interface result {
@@ -39,14 +39,19 @@ export default function Home() {
   useEffect(() => {
     const socket = socketIOClient('http://127.0.0.1:5000')
 
-    socket.on('photo_analyzed_notification', () => {
+    const handlePhotoAnalyzedNotification = () => {
       fetchPhotoList();
-    });
+      toast('Analysis completed');
+    };
+  
+    socket.on('photo_analyzed_notification', handlePhotoAnalyzedNotification);
+  
+    return () => {
+      socket.off('photo_analyzed_notification', handlePhotoAnalyzedNotification);
+    };
   }, []);
 
-  useEffect(() => {
-    fetchPhotoList();
-  }, []);// Le parentesi quadre vuote indicano che questo effetto non dipende da nessuna variabile e quindi verrà eseguito solo una volta dopo il montaggio del componente.
+// Le parentesi quadre vuote indicano che questo effetto non dipende da nessuna variabile e quindi verrà eseguito solo una volta dopo il montaggio del componente.
 
   return (
 
@@ -54,6 +59,7 @@ export default function Home() {
 
       <SparklesPreview />
       <TabsDemo />
+      <Toaster />
       <div className="content">
         <div className="container">
           <Table
@@ -71,19 +77,23 @@ export default function Home() {
               {photoList.map((element, index) => ( // Utilizza photo come elemento corrente
                 <TableRow key={index}>
                   <TableCell>
-                    <img src={element.anteprima} alt={`Photo ${index}`} style={{ maxWidth: '90px', borderRadius: '6px' }} />
+                    <img src={element.anteprima} alt={`Photo ${index}`} style={{ maxWidth: '100px', borderRadius: '8px' }} />
                   </TableCell>
-                  <TableCell>{element.file_name}</TableCell>
+                  <TableCell>
+                    <div style={{ fontSize: '20px' }}>
+                        {element.file_name}
+                    </div>
+                    </TableCell>
                   <TableCell>
                     {element.state ? (
                         element.state == 'Real' ?(
-                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
                             
                             {element.state}   <img src={green_icon.src} alt="boh" style={{ maxWidth: '25px', maxHeight: '25px', marginLeft: '5px' }} />
                               
                           </div>
                         ) : (
-                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '20px' }}>
                               {element.state} <img src={red_icon.src} alt="boh" style={{ maxWidth: '25px', maxHeight: '25px', marginLeft: '5px' }} />
                               
                           </div>
