@@ -17,6 +17,7 @@ import numpy as np
 from PIL import Image
 from resnet50nodown import resnet50nodown
 from typing import List, Dict
+from werkzeug.utils import secure_filename 
 
 
 app = Flask(__name__)
@@ -83,33 +84,40 @@ def predicted_classes(boxes, class_names):
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    # Check if the file was uploaded
+    # Check for uploaded file
     if 'file' not in request.files:
-        return 'No file uploadeddddd', 400
+        return 'No file uploaded', 400
 
-    # Get the file and selected model from the form
     uploaded_file = request.files['file']
     selected_model = request.form.get('model')
     file_name = request.form['nome']
 
-    # Get the file extension
-    file_extension = os.path.splitext(uploaded_file.filename)[1]
+    # Get secure filename with extension check
+    filename = secure_filename(uploaded_file.filename)
+    file_extension = os.path.splitext(filename)[1].lower()
 
-    if selected_model == 'object':
-        if file_extension.lower() in ('.jpg', '.jpeg', '.png', '.gif'):
-            return analyze_photo(uploaded_file, file_name)
-        else:
-            # Aggiungi un controllo per i formati video
-            return analyze_video(uploaded_file, file_name)
-        
-    elif selected_model == 'fake':
-        return analyze_fake(uploaded_file, file_name)
-    
-    elif selected_model == 'speed':
-        return analyze_speed(uploaded_file, file_name)
-    
-    elif selected_model == 'gym':
-        return analyze_gym(uploaded_file, file_name)
+    # Validate file extension based on selected model
+    valid_extensions = {
+        'object': ('.jpg', '.jpeg', '.png', '.gif'),
+        'fake': ('.jpg', '.jpeg', '.png', '.gif'),  # Placeholder for valid extensions
+        'speed': ('.mp4', '.avi'),  # Placeholder for valid extensions
+        'gym': ('.mp4', '.avi'),  # Placeholder for valid extensions
+    }
+    if selected_model not in valid_extensions or file_extension not in valid_extensions[selected_model]:
+        return jsonify({'error': 'Invalid file format.'}), 400
+
+    # Call appropriate analysis function based on model and extension
+    analysis_functions = {
+        'object': analyze_photo,
+        'fake': analyze_fake,
+        'speed': analyze_speed,
+        'gym': analyze_gym,
+    }
+    if selected_model not in analysis_functions:
+        # Handle invalid model selection more gracefully (e.g., log error, return informative response)
+        return jsonify({'error': 'Invalid model selection.'}), 400
+
+    return analysis_functions[selected_model](uploaded_file, file_name)
 
 
 

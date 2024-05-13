@@ -14,7 +14,8 @@ const Dropzone = () => {
         setFiles(acceptedFiles);
     }, []);
 
-    const analyzePhoto = async () => {
+    
+    const analyzeFile = async () => {
         if (selectedModel && files.length > 0) {
             setLoading(true);
 
@@ -29,12 +30,11 @@ const Dropzone = () => {
                     body: formData,
                 });
 
-
-
-
-                setLoading(false);  
+               setLoading(false);  
             } catch (error) {
                 console.error('Errore durante l\'analisi della foto:', error);
+            }finally {
+                setLoading(false); 
             }
         }
     };
@@ -93,7 +93,7 @@ const Dropzone = () => {
                 
             } 
 
-            <TailwindcssButtons analyzePhoto={analyzePhoto}></TailwindcssButtons>
+            <TailwindcssButtons analyzeFile={analyzeFile}></TailwindcssButtons>
         </div >
     );
 };

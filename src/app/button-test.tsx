@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { ButtonsCard } from './components/ui/button';
 
-export function TailwindcssButtons({ analyzePhoto }: { analyzePhoto: () => void }) {
+export function TailwindcssButtons({ analyzeFile }: { analyzeFile: () => void }) {
     return (
         <div>
             
             {buttons.map((button, idx) => (
-                <ButtonsCard key={idx} onClick={analyzePhoto}>
+                <ButtonsCard key={idx} onClick={analyzeFile}>
                     {button.component}
                 </ButtonsCard>
             ))}
