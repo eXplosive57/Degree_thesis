@@ -268,7 +268,7 @@ def analyze_speed(video, nome_file):
         video_writer = cv2.VideoWriter(analyzed_video_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
         
         # Punti della linea per la stima della velocità
-        line_pts = [(0, h//2), (w, h//2)]
+        line_pts = [(0, h//3), (w, h//3)]
         
         # Inizializza l'oggetto speed-estimation
         speed_obj = speed_estimation.SpeedEstimator()
@@ -320,7 +320,7 @@ def analyze_speed(video, nome_file):
     
         handle_new_photo_analyzed()
 
-        return 'Video analizzato con successo', 200
+        return 'video analyzed successfully', 200
 
 
 
@@ -355,7 +355,7 @@ def analyze_fake(photo, nome_file):
         
     }
     handle_new_photo_analyzed()
-    return 'Daje', 200
+    return 'video analyzed successfully', 200
 
 
 
@@ -420,7 +420,7 @@ def analyze_gym(video, nome_file):
         }
     
         handle_new_photo_analyzed()
-        return 'Daje', 200
+        return 'video analyzed successfully', 200
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
