@@ -2,14 +2,14 @@
 
 ## Table of Contents
 
-* Introduction
+* [Introduction]
 * Features
-Technologies Used
-Installation
-Usage
-Contributing
-License
-Contact
+* Technologies Used
+* Installation
+* Usage
+* Contributing
+* License
+* Contact
 
 ## Introduction
 This repository contains the source code for a university project that I developed. The project is a web application that integrates various AI models to provide advanced functionalities and features. The goal of this project was to explore the application of artificial intelligence in web development and demonstrate the potential of integrating AI models into a user-friendly web interface.
