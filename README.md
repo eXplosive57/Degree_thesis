@@ -2,8 +2,8 @@
 
 ## Table of Contents
 
-Introduction
-Features
+* Introduction
+* Features
 Technologies Used
 Installation
 Usage
