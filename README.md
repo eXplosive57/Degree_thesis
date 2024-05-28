@@ -1,6 +1,6 @@
 # AI-Integrated Web Application
 
-## Table of Contents
+## Table of Contents :star:
 
 - [Introduction](#introduction)
 - [Features](#features)
