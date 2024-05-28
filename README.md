@@ -35,22 +35,23 @@ This repository contains the source code for a university project that I develop
 To run this project locally, follow these steps:
 
 1. **Clone the repository:**
+   
    ```sh
    git clone https://github.com/eXplosive57/Degree_thesis.git
    
-2. **Navigate to the project directory:**
+3. **Navigate to the project directory:**
    ```sh
    cd Degree_thesis
 
-3. **Install the dependencies:**
+4. **Install the dependencies:**
    ```sh
    npm install
 
-4. **Start the development server:**
+5. **Start the development server:**
    ```sh
    run server.py
 
-5. **Start React App:**
+6. **Start React App:**
    ```sh
    npm start
 
