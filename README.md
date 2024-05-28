@@ -7,8 +7,6 @@
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Introduction
@@ -18,17 +16,14 @@ This repository contains the source code for a university project that I develop
 ## Features
 
 - **AI Models Integration**: Incorporates various AI models for tasks such as natural language processing, image recognition, and more.
-- **User Authentication**: Secure user login and registration system.
 - **Responsive Design**: User-friendly interface that adapts to different devices and screen sizes.
 - **Real-Time Data Processing**: Processes data in real-time to provide instant feedback and results.
 
 ## Technologies Used
 
 - **Frontend**: HTML, CSS, JavaScript, React
-- **Backend**: Node.js, Express
-- **AI Models**: TensorFlow, PyTorch, Scikit-learn
-- **Database**: MongoDB
-- **Authentication**: JWT (JSON Web Tokens)
+- **Backend**: Node.js, Python
+- **AI Models**: TensorFlow, ResNet50
 
 ## Installation
 
@@ -68,4 +63,4 @@ Once the server is running, open your browser and navigate to [http://localhost:
 For any questions or inquiries, please contact me at:
 
 - **Email**: kerroucheilyas2@gmail.com
-- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/ilyas-kerrouche-aa193919a/)
+- **LinkedIn**: [Ilyas Kerrouche](https://www.linkedin.com/in/ilyas-kerrouche-aa193919a/)
