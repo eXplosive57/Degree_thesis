@@ -39,19 +39,33 @@ To run this project locally, follow these steps:
    ```sh
    git clone https://github.com/eXplosive57/Degree_thesis.git
    
-3. **Navigate to the project directory:**
+2. **Navigate to the project directory:**
+   
    ```sh
    cd Degree_thesis
 
-4. **Install the dependencies:**
+3. **Install the dependencies:**
+   
    ```sh
    npm install
 
-5. **Start the development server:**
+4. **Start the development server:**
+   
    ```sh
    run server.py
 
-6. **Start React App:**
+5. **Start React App:**
+    
    ```sh
    npm start
 
+## Usage
+
+Once the server is running, open your browser and navigate to [http://localhost:3000](http://localhost:3000) to access the web application. From here, you can explore the various features and functionalities provided by the AI models integrated into the app.
+
+## Contact
+
+For any questions or inquiries, please contact me at:
+
+- **Email**: kerroucheilyas2@gmail.com
+- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/ilyas-kerrouche-aa193919a/)
