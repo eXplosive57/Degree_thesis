@@ -9,23 +9,23 @@
 - [Usage](#usage)
 - [Contact](#contact)
 
-## Introduction
+## Introduction :bulb:
 
 This repository contains the source code for a university project that I developed. The project is a web application that integrates various AI models to provide advanced functionalities and features. The goal of this project was to explore the application of artificial intelligence in web development and demonstrate the potential of integrating AI models into a user-friendly web interface.
 
-## Features
+## Features :zap:
 
 - **AI Models Integration**: Incorporates various AI models for tasks such as natural language processing, image recognition, and more.
 - **Responsive Design**: User-friendly interface that adapts to different devices and screen sizes.
 - **Real-Time Data Processing**: Processes data in real-time to provide instant feedback and results.
 
-## Technologies Used
+## Technologies Used :computer:
 
 - **Frontend**: HTML, CSS, JavaScript, React
 - **Backend**: Node.js, Python
 - **AI Models**: TensorFlow, ResNet50
 
-## Installation
+## Installation :wrench:
 
 To run this project locally, follow these steps:
 
@@ -54,11 +54,11 @@ To run this project locally, follow these steps:
    ```sh
    npm start
 
-## Usage
+## Usage :flashlight:
 
 Once the server is running, open your browser and navigate to [http://localhost:3000](http://localhost:3000) to access the web application. From here, you can explore the various features and functionalities provided by the AI models integrated into the app.
 
-## Contact
+## Contact :email:
 
 For any questions or inquiries, please contact me at:
 
