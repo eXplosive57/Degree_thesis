@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-* [Introduction]
+* Introduction
 * Features
 * Technologies Used
 * Installation
@@ -27,3 +27,7 @@ Database: MongoDB
 Authentication: JWT (JSON Web Tokens)
 ## Installation
 To run this project locally, follow these steps:
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/yourusername/AI-Integrated-Web-App.git
